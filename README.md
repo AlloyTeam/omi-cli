@@ -1,6 +1,6 @@
 # omi-cli
 
-CLI for Omi projects - Omi框架的命令行工具
+CLI for [Omi](https://github.com/AlloyTeam/omi) projects - [Omi框架](https://github.com/AlloyTeam/omi)的命令行工具
 
 ## Installation
 Prerequisites: Node.js (>=6.x), npm version 3+
