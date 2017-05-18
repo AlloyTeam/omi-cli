@@ -2,59 +2,24 @@
 
 CLI for [Omi](https://github.com/AlloyTeam/omi) projects - [Omi框架](https://github.com/AlloyTeam/omi)的命令行工具
 
-## Installation
+## Introduction
 Prerequisites: Node.js (>=6.x), npm version 3+
 
 ```
-$ npm install omi-cli -g
+$ npm install omi-cli -g    
+$ omi init [project name]    
+$ cd your_project_name
+$ npm start                  //development
+$ npm run dist               //build   
 ```
 
-## Usage
-initialize a new omi application :
-
-```
-$ omi init                          // in current directory
-$ omi init [project name]           // in new directroy named project name
-```
-
-Scaffolding is based on webpack2. omi-cli will run npm command to install dependencies automatically. You could switch the mirror source with:
+Scaffolding is based on webpack2. omi-cli will run npm command to install dependencies automatically. You could switch the mirror source with for faster  speed:
 
 ```
 $ omi init app -m cnpm 
 ```
 
 we support to shift from default to `npm`, `cnpm` or `taobao` mirror.
-
-
-
-### development
-
-``` js
-$ npm run dev
-```
-
-### build
-
-``` js
-$ npm run dist
-```
-
-## omi pr
-
-initialize a new `omi-pr` project :
-
-```
-$ omi init-pr                          // in current directory
-$ omi init-pr [project name]           // in new directroy named project name
-```
-
-pre-render your project for speeding up your web page access times, you can run:
-
-```
-$ omi pr
-```
-
-in your omi-pr project.
 
 
 ## Contributors
