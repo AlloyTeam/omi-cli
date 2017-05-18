@@ -2,7 +2,6 @@
 
 CLI for Omi projects - Omi框架的命令行工具
 
-
 ## Installation
 Prerequisites: Node.js (>=6.x), npm version 3+
 
@@ -18,7 +17,7 @@ $ omi init                          // in current directory
 $ omi init [project name]           // in new directroy named project name
 ```
 
-omi-cli will run npm command to install dependencies automatically. You could switch the mirror source with:
+Scaffolding is based on webpack2. omi-cli will run npm command to install dependencies automatically. You could switch the mirror source with:
 
 ```
 $ omi init app -m cnpm 
@@ -27,11 +26,6 @@ $ omi init app -m cnpm
 we support to shift from default to `npm`, `cnpm` or `taobao` mirror.
 
 
-### Scaffolding
-
-Using `Gulp + Webpack + Babel + BrowserSync` Scaffolding.
-
-You can modify your project name，or modify the project detail by `npm init`.
 
 ### development
 
