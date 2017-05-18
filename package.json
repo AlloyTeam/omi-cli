@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AlloyTeam/omi.git"
+    "url": "git+https://github.com/AlloyTeam/omi-cli.git"
   },
   "keywords": [
     "omi",
@@ -39,7 +39,7 @@
     "webpack": "^2.3.3"
   },
   "bugs": {
-    "url": "https://github.com/AlloyTeam/omi/issues"
+    "url": "https://github.com/AlloyTeam/omi-cli/issues"
   },
-  "homepage": "https://github.com/AlloyTeam/omi#readme"
+  "homepage": "https://github.com/AlloyTeam/omi-cli#readme"
 }
