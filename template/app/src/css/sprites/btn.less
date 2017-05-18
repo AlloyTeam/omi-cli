@@ -1,0 +1,241 @@
+/*
+LESS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: @icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+@icon-home: x y offset_x offset_y width height total_width total_height image_path name;
+
+At the bottom of this section, we provide information about the spritesheet itself
+@spritesheet: width height image @spritesheet-sprites;
+*/
+@apple-name: 'apple';
+@apple-x: 0px;
+@apple-y: 0px;
+@apple-offset-x: 0px;
+@apple-offset-y: 0px;
+@apple-width: 64px;
+@apple-height: 64px;
+@apple-total-width: 138px;
+@apple-total-height: 138px;
+@apple-image: '~btn.png';
+@apple: 0px 0px 0px 0px 64px 64px 138px 138px '~btn.png' 'apple';
+@gmail-name: 'gmail';
+@gmail-x: 74px;
+@gmail-y: 0px;
+@gmail-offset-x: -74px;
+@gmail-offset-y: 0px;
+@gmail-width: 64px;
+@gmail-height: 64px;
+@gmail-total-width: 138px;
+@gmail-total-height: 138px;
+@gmail-image: '~btn.png';
+@gmail: 74px 0px -74px 0px 64px 64px 138px 138px '~btn.png' 'gmail';
+@microsoft-name: 'microsoft';
+@microsoft-x: 0px;
+@microsoft-y: 74px;
+@microsoft-offset-x: 0px;
+@microsoft-offset-y: -74px;
+@microsoft-width: 64px;
+@microsoft-height: 64px;
+@microsoft-total-width: 138px;
+@microsoft-total-height: 138px;
+@microsoft-image: '~btn.png';
+@microsoft: 0px 74px 0px -74px 64px 64px 138px 138px '~btn.png' 'microsoft';
+@youtube-name: 'youtube';
+@youtube-x: 74px;
+@youtube-y: 74px;
+@youtube-offset-x: -74px;
+@youtube-offset-y: -74px;
+@youtube-width: 64px;
+@youtube-height: 64px;
+@youtube-total-width: 138px;
+@youtube-total-height: 138px;
+@youtube-image: '~btn.png';
+@youtube: 74px 74px -74px -74px 64px 64px 138px 138px '~btn.png' 'youtube';
+@retina-apple-name: 'retina_apple';
+@retina-apple-x: 0px;
+@retina-apple-y: 0px;
+@retina-apple-offset-x: 0px;
+@retina-apple-offset-y: 0px;
+@retina-apple-width: 128px;
+@retina-apple-height: 128px;
+@retina-apple-total-width: 276px;
+@retina-apple-total-height: 276px;
+@retina-apple-image: '~btn@2x.png';
+@retina-apple: 0px 0px 0px 0px 128px 128px 276px 276px '~btn@2x.png' 'retina_apple';
+@retina-gmail-name: 'retina_gmail';
+@retina-gmail-x: 148px;
+@retina-gmail-y: 0px;
+@retina-gmail-offset-x: -148px;
+@retina-gmail-offset-y: 0px;
+@retina-gmail-width: 128px;
+@retina-gmail-height: 128px;
+@retina-gmail-total-width: 276px;
+@retina-gmail-total-height: 276px;
+@retina-gmail-image: '~btn@2x.png';
+@retina-gmail: 148px 0px -148px 0px 128px 128px 276px 276px '~btn@2x.png' 'retina_gmail';
+@retina-microsoft-name: 'retina_microsoft';
+@retina-microsoft-x: 0px;
+@retina-microsoft-y: 148px;
+@retina-microsoft-offset-x: 0px;
+@retina-microsoft-offset-y: -148px;
+@retina-microsoft-width: 128px;
+@retina-microsoft-height: 128px;
+@retina-microsoft-total-width: 276px;
+@retina-microsoft-total-height: 276px;
+@retina-microsoft-image: '~btn@2x.png';
+@retina-microsoft: 0px 148px 0px -148px 128px 128px 276px 276px '~btn@2x.png' 'retina_microsoft';
+@retina-youtube-name: 'retina_youtube';
+@retina-youtube-x: 148px;
+@retina-youtube-y: 148px;
+@retina-youtube-offset-x: -148px;
+@retina-youtube-offset-y: -148px;
+@retina-youtube-width: 128px;
+@retina-youtube-height: 128px;
+@retina-youtube-total-width: 276px;
+@retina-youtube-total-height: 276px;
+@retina-youtube-image: '~btn@2x.png';
+@retina-youtube: 148px 148px -148px -148px 128px 128px 276px 276px '~btn@2x.png' 'retina_youtube';
+@spritesheet-width: 138px;
+@spritesheet-height: 138px;
+@spritesheet-image: '~btn.png';
+@spritesheet-sprites: @apple @gmail @microsoft @youtube;
+@spritesheet: 138px 138px '~btn.png' @spritesheet-sprites;
+@retina-spritesheet-width: 276px;
+@retina-spritesheet-height: 276px;
+@retina-spritesheet-image: '~btn@2x.png';
+@retina-spritesheet-sprites: @retina-apple @retina-gmail @retina-microsoft @retina-youtube;
+@retina-spritesheet: 276px 276px '~btn@2x.png' @retina-spritesheet-sprites;
+
+/*
+These "retina group" variables are mappings for the naming and pairing of normal and retina sprites.
+
+The list formatted variables are intended for mixins like `retina-sprite` and `retina-sprites`.
+*/
+@apple-group-name: 'apple';
+@apple-group: 'apple' @apple @retina-apple;
+@gmail-group-name: 'gmail';
+@gmail-group: 'gmail' @gmail @retina-gmail;
+@microsoft-group-name: 'microsoft';
+@microsoft-group: 'microsoft' @microsoft @retina-microsoft;
+@youtube-group-name: 'youtube';
+@youtube-group: 'youtube' @youtube @retina-youtube;
+@retina-groups: @apple-group @gmail-group @microsoft-group @youtube-group;
+
+/*
+The provided classes are intended to be used with the array-like variables
+
+.icon-home {
+  .sprite-width(@icon-home);
+}
+.icon-email {
+  .sprite(@icon-email);
+}
+
+Example usage in HTML:
+
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
+}
+
+// HTML
+<i class="icon icon-home"></i>
+*/
+.sprite-width(@sprite) {
+  width: extract(@sprite, 5);
+}
+
+.sprite-height(@sprite) {
+  height: extract(@sprite, 6);
+}
+
+.sprite-position(@sprite) {
+  @sprite-offset-x: extract(@sprite, 3);
+  @sprite-offset-y: extract(@sprite, 4);
+  background-position: @sprite-offset-x @sprite-offset-y;
+}
+
+.sprite-image(@sprite) {
+  @sprite-image: extract(@sprite, 9);
+  @sprite-image-bare: ~`"@{sprite-image}".slice(1, -1)`;
+  background-image: url(@sprite-image-bare);
+}
+
+.sprite(@sprite) {
+  .sprite-image(@sprite);
+  .sprite-position(@sprite);
+  .sprite-width(@sprite);
+  .sprite-height(@sprite);
+}
+
+/*
+The `retina-sprite` class sets up rules and a media query for a sprite/retina sprite.
+  It should be used with a "retina group" variable.
+
+The media query is from CSS Tricks: https://css-tricks.com/snippets/css/retina-display-media-query/
+
+@icon-home-group: 'icon-home' @icon-home @icon-home-2x;
+
+.icon-home {
+  .retina-sprite(@icon-home-group);
+}
+*/
+.sprite-background-size(@sprite) {
+  @sprite-total-width: extract(@sprite, 7);
+  @sprite-total-height: extract(@sprite, 8);
+  background-size: @sprite-total-width @sprite-total-height;
+}
+
+.retina-sprite(@retina-group) {
+  @normal-sprite: extract(@retina-group, 2);
+  @retina-sprite: extract(@retina-group, 3);
+  .sprite(@normal-sprite);
+
+  @media (-webkit-min-device-pixel-ratio: 2),
+         (min-resolution: 192dpi) {
+    .sprite-image(@retina-sprite);
+    .sprite-background-size(@normal-sprite);
+  }
+}
+
+/*
+The `.sprites` mixin generates identical output to the CSS template
+  but can be overridden inside of LESS
+
+This must be run when you have at least 2 sprites.
+  If run with a single sprite, then there will be reference errors.
+
+.sprites(@spritesheet-sprites);
+*/
+.sprites(@sprites, @i: 1) when (@i <= length(@sprites)) {
+  @sprite: extract(@sprites, @i);
+  @sprite-name: e(extract(@sprite, 10));
+  .@{sprite-name} {
+    .sprite(@sprite);
+  }
+  .sprites(@sprites, @i + 1);
+}
+
+/*
+The `.retina-sprites` mixin generates a CSS rule and media query for retina groups
+  This yields the same output as CSS retina template but can be overridden in LESS
+
+.retina-sprites(@retina-groups);
+*/
+.retina-sprites(@retina-groups, @i: 1) when (@i <= length(@retina-groups)) {
+  @retina-group: extract(@retina-groups, @i);
+  @sprite-name: e(extract(@retina-group, 1));
+  .@{sprite-name} {
+    .retina-sprite(@retina-group);
+  }
+  .retina-sprites(@retina-groups, @i + 1);
+}
