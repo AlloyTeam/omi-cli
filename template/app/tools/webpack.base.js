@@ -268,10 +268,15 @@ if (isProduction) {
     if (configWebpack.compress) {
         baseConfig.plugins.push(new UglifyJsParallelPlugin({
             workers: os.cpus().length, // usually having as many workers as cpu cores gives good results 
-            // other uglify options 
+            // other uglify options
             compress: {
                 warnings: false,
+                screw_ie8 : false
             },
+            mangle: {
+                screw_ie8: false
+            },
+            output: { screw_ie8: false }
         }));
     }
 }
