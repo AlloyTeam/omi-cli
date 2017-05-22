@@ -28,14 +28,14 @@ $ omi init app -m cnpm
 
 ## 用户指南
 
-* 文件目录
-* npm 脚本
-    * npm start
-    * npm run dist
-* 代码分割
-* 兼容 IE8
-* 插入样式
-* 插入组件局部样式
+* [文件目录](#文件目录)
+* [npm 脚本](#npm-脚本)
+    * [npm start](#npm-start)
+    * [npm run dist](#npm-run-dist)
+* [代码分割](#代码分割)
+* [兼容 IE8](#兼容-ie8)
+* [插入样式](#插入样式)
+* [插入组件局部样式](#插入组件局部样式)
 
 ### 文件目录
 
