@@ -8,6 +8,7 @@
     "dev": "node ./tools/script.js --mode=development",
     "dist": "node ./tools/script.js --mode=production",
     "pub": "node ./tools/script.js --mode=production",
+    "build": "node ./tools/script.js --mode=production",
     "source": "node ./tools/script.js --mode=source",
     "test": "",
     "lint": "eslint src && stylelint src/**/*.less",

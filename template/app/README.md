@@ -16,7 +16,7 @@ npm start
 ## 生成发布代码
 
 ```
-npm run dist
+npm run dist   // 或者 npm run build 也是同样的效果
 ```
 
 通过上面的命令，最后生成的代码可以完美**兼容**IE8。
