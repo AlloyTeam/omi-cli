@@ -1,10 +1,8 @@
+#### 中文 | [English](https://github.com/AlloyTeam/omi-cli#english--中文)
+
 # omi-cli
 
 CLI for [Omi](https://github.com/AlloyTeam/omi) projects - [Omi框架](https://github.com/AlloyTeam/omi) 的命令行工具
-
-
-#### 中文 | [English](https://github.com/AlloyTeam/omi-cli#english--中文)
-
 
 ## 简介
 
