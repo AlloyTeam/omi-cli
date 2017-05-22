@@ -1,16 +1,15 @@
-import logo from './logo.svg';
-import './index.css';
+import logo from './logo.svg'
+import './index.css'
+
 
 class Hello extends Omi.Component {
   constructor(data, option){
       super(data, option)
-
-
   }
 
   handleClick(){
     require.ensure(['./a.js'], function() {
-      var a = require("./a.js");
+      let a = require("./a.js")
       // ...
 
       console.log(a)
@@ -18,6 +17,10 @@ class Hello extends Omi.Component {
       document.body.innerHTML+=`<img src="${a.src}">`
     });
 
+  }
+
+  style(){
+    return require('./_hello.css')
   }
 
   render() {
@@ -35,8 +38,8 @@ class Hello extends Omi.Component {
           {{name}}
         </p>
       </div>
-    `;
+    `
   }
 }
 
-export default Hello;
+export default Hello

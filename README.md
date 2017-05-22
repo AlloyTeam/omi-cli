@@ -34,7 +34,12 @@ $ omi init app -m cnpm
     * npm run dist
 * 代码分割
 * 兼容 IE8
+* 插入样式
+* 插入组件局部样式
 
+### 文件目录
+
+执行完`omi init my-app`，你可以看到会生成如下的基础目录结构
 
 ```
 my-app/
@@ -50,7 +55,15 @@ my-app/
     favicon.ico
 ```
 
-当你执行 npm run dist 之后，会创建一个dist目录，所有要发布的文件都在里面:
+### npm 脚本
+
+#### npm start
+
+当你执行 `npm start` 会自动打开 [http://localhost:9000/](http://localhost:9000/)。现在你可以开始开发和调试，修改代码并且保存，浏览器会自动刷新显示最新的结果。
+
+#### npm run dist
+
+当你执行 `npm run dist` 之后，会创建一个dist目录，所有要发布的文件都在里面:
 
 ```
 my-app/
@@ -64,6 +77,99 @@ my-app/
     index.html
     page-b.html
 ```
+
+### 代码分割
+
+为了优化性能，用户不需要一次性加载所有网页的依赖，可以在需要使用的时候再进行加载，所以这部分可以进行分割成单独的模块。
+如下面的a.js:
+
+```js
+import logo from '../../img/omi.png'
+
+module.exports = { src: logo }
+```
+
+通过require.ensure进行按需使用，在用户点击事件触发之后才会进行加载a.js以及a.js的所有依赖，如下面代码所示:
+
+```js
+class Hello extends Omi.Component {
+  constructor(data, option){
+      super(data, option)
+  }
+
+  handleClick(){
+    require.ensure(['./a.js'], function() {
+      var a = require("./a.js")
+      document.body.innerHTML+=`<img src="${a.src}">`
+    })
+  }
+
+  render() {
+    return `
+      <div class="App">
+        <div class="App-header">
+          <img src='${logo}' onclick="handleClick" class="App-logo" alt="logo" />
+          <h2>Welcome to Omi</h2>
+        </div>
+        <p class="App-intro">
+          To get started, edit <code>src/component/hello.js</code> and save to reload.
+        </p>
+         <p class="App-intro">
+          {{name}}
+        </p>
+      </div>
+    `
+  }
+}
+
+```
+
+### 兼容 IE8
+
+Omi框架是可以兼容IE8的。
+
+由于使用了`webpack-hot-middleware`, 开发过程**不兼容**IE8，但是没关系，`npm run dist `生成的发布代码是兼容IE8。
+
+需要主要的是，你需要在你的HTML里引用es5-sham或者es5-shim。如:
+
+```js
+<!--[if lt IE 9]>
+<script type="text/javascript" crossorigin="anonymous" src="//s.url.cn/qqun/xiaoqu/buluo/p/js/es5-sham-es5-sham.min.77c4325f.js"></script>
+<![endif]-->
+```
+
+### 插入样式
+
+通过import可以在js依赖相关的css文件，
+
+```js
+import './index.css'
+```
+
+index.css会在运行时插入到head里面。
+
+### 插入组件局部样式
+
+``` js
+import './index.css'
+
+class Hello extends Omi.Component {
+  constructor(data, option){
+      super(data, option)
+  }
+
+  style(){
+    return require('./_hello.css')
+  }
+  ...
+  ...
+}
+```
+
+Omi框架的style方法返回的字符串会生成为组件的局部CSS。
+
+  需要特别注意的是: 组件的局部CSS必须使用下划线开头，如`_xxx.css`，`_aaa-bbb.css`,不然会被识别成全局CSS插入到head里。
+
 
 #### English | [﻿中文](https://github.com/AlloyTeam/omi-cli#中文--english)
 

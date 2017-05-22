@@ -79,11 +79,23 @@ var baseConfig = {
 /************* loaders 处理 *************/
 // 样式loader
 var styleRules = {
-    css: {
-        test: /\.css$/,
+    'scoped.css':{
+        test: /[\S]*_[\S]*\.css$/,
         // 单独抽出样式文件
         loader: ExtractTextPlugin.extract({
-            fallback: 'style-loader', 
+            use: [
+                'to-string-loader',
+                'css-loader'
+            ]
+        }),
+        include: path.resolve(config.webpack.path.src)
+    },
+    css: {
+        test: /\.css$/,
+        exclude:/[\S]*_[\S]*\.css$/,
+        // 单独抽出样式文件
+        loader: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
             use: [
                 {
                     loader: 'css-loader',
