@@ -82,12 +82,10 @@ var styleRules = {
     'scoped.css':{
         test: /[\S]*_[\S]*\.css$/,
         // 单独抽出样式文件
-        loader: ExtractTextPlugin.extract({
-            use: [
-                'to-string-loader',
-                'css-loader'
-            ]
-        }),
+        use: [
+            'to-string-loader',
+            'css-loader'
+        ],
         include: path.resolve(config.webpack.path.src)
     },
     css: {
@@ -236,7 +234,7 @@ let imageLoader = {
             options: {
                 publicPath: isProduction ? configWebpack.imgCdn : configWebpack.webserver,
                 limit: 1000,
-                name: "img/[path]/" + configWebpack.hashName + ".[ext]",
+                name: "[path]/" + configWebpack.hashName + ".[ext]",
             },
         },
     ]

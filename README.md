@@ -171,6 +171,9 @@ Omi框架的style方法返回的字符串会生成为组件的局部CSS。
 
   需要特别注意的是: 组件的局部CSS必须使用下划线开头，如`_xxx.css`，`_aaa-bbb.css`,不然会被识别成全局CSS插入到head里。
 
+### 导入图片、字体、SVG 等文件
+
+每种类型都可以对应webpack里的一个loader。
 
 #### English | [﻿中文](https://github.com/AlloyTeam/omi-cli#中文--english)
 
