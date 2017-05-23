@@ -32,18 +32,27 @@ $ omi init app -m cnpm
     * [npm run dist](#npm-run-dist)
 * [代码分割](#代码分割)
 * [兼容 IE8](#兼容-ie8)
-* [插入样式](#插入样式)
-* [插入组件局部样式](#插入组件局部样式)
+* [插入 CSS](#插入css)
+* [插入组件局部 CSS](#插入组件局部css)
+* 插入 Less
+* 插入组件局部 Less
 * 导入组件
 * 导入图片、字体、SVG 等文件
-* 修改 CDN 地址
+* 修改配置
+    * 修改 CDN 地址
+    * 修改 webserver 和 port
+    * 修改 route
 
+                
 ### 文件目录
 
 执行完`omi init my-app`，你可以看到会生成如下的基础目录结构
 
 ```
 my-app/
+  config
+    project.js
+    steamer.config.js
   src/
     component
     css
@@ -55,6 +64,9 @@ my-app/
       page-b
     favicon.ico
 ```
+
+* config里的文件是webpack打包配置以及cdn、webserver，端口、route配置
+* src目录是我们的项目逻辑代码目录
 
 ### npm 脚本
 
@@ -139,7 +151,7 @@ Omi框架是可以兼容IE8的。
 <![endif]-->
 ```
 
-### 插入样式
+### 插入 CSS
 
 通过import可以在js依赖相关的css文件，
 
@@ -147,9 +159,9 @@ Omi框架是可以兼容IE8的。
 import './index.css'
 ```
 
-index.css会在运行时插入到head里面。
+index.css会被提取到CSS文件当中，插入到head里面。
 
-### 插入组件局部样式
+### 插入组件局部 CSS
 
 ``` js
 import './index.css'
@@ -167,13 +179,142 @@ class Hello extends Omi.Component {
 }
 ```
 
-Omi框架的style方法返回的字符串会生成为组件的局部CSS。
+Omi框架的style方法返回的字符串会生成为组件的局部CSS，`_hello.css`文件会在运行时动态插入到head里面。
 
   需要特别注意的是: 组件的局部CSS必须使用下划线开头，如`_xxx.css`，`_aaa-bbb.css`,不然会被识别成全局CSS插入到head里。
 
+### 插入 Less
+
+通过import可以在js依赖相关的css文件，
+
+```js
+import './xxx.less'
+```
+
+xxx.less会在转换成CSS，并且被提取到CSS文件当中，插入到head里面。
+
+### 插入组件局部 Less
+
+``` js
+
+class Intro extends Omi.Component {
+  constructor(data, option){
+      super(data, option)
+  }
+
+  style(){
+    return require('./_index.less')
+  }
+
+  render() {
+
+    return `
+          <p class="app-intro">
+          To get started, edit <code>src/component/hello.js</code> and save to reload.
+        </p>
+    `
+  }
+}
+
+export default Intro
+```
+
+Omi框架的style方法返回的字符串会生成为组件的局部CSS，`_index.css`文件会在运行时动态插入到head里面。
+
+  需要特别注意的是: 组件的局部Less必须使用下划线开头，如`_xxx.css`，`_aaa-bbb.css`,不然会被识别成全局CSS插入到head里。
+
+### 导入组件
+
+如上面一节定义了`Intro`组件，利用复用。那么怎么在其他组件中使用?
+
+```
+import Intro from '../intro/index.js'
+
+Omi.tag('intro',Intro)
+
+class XXX extends Omi.Component {
+  constructor(data, option){
+      super(data, option)
+  }
+
+  render() {
+
+    return `
+      <div>
+        <div>Hello Omi!</div>
+        <intro></intro>
+      </div>
+    `
+  }
+}
+
+export default XXX
+```
+
+通过`Omi.tag('intro',Intro)`把组件Intro生成为可以声明式的标签。注意便签名字要使用小写，多个单词使用中划线，如:`my-intro`、`app-header`等。
+
 ### 导入图片、字体、SVG 等文件
 
-每种类型都可以对应webpack里的一个loader。
+如上面的例子:
+
+```
+import logo from './logo.svg'
+```
+
+logo.svg会被动态转成base64。我们可以为每种类型都对应webpack里的一个loader来处理所有的文件类型。
+
+### 修改配置
+
+打开 `steamer.config.js`，其位置如下:
+
+```
+my-app/
+  config
+    project.js
+    **steamer.config.js**
+```
+
+打开之后可以看到
+
+```js
+module.exports = {
+    "webserver": "//localhost:9000/",
+    "cdn": "",
+    "port": "9000",
+    "route": "/news/",
+};
+```
+
+#### 修改 CDN 地址
+
+```js
+module.exports = {
+    "webserver": "//localhost:9000/",
+    "cdn": "//s.url.cn/",
+    "port": "9000",
+    "route": "/news/",
+};
+```
+
+#### 修改 webserver 和 port
+```js
+module.exports = {
+    "webserver": "//localhost:9000/",
+    "cdn": "//s.url.cn/",
+    "port": "9001",
+    "route": "/news/",
+};
+```
+#### 修改 route
+
+```js
+module.exports = {
+    "webserver": "//localhost:9000/",
+    "cdn": "//s.url.cn/",
+    "port": "9001",
+    "route": "/user/",
+};
+```
 
 #### English | [﻿中文](https://github.com/AlloyTeam/omi-cli#中文--english)
 
