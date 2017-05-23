@@ -2,7 +2,7 @@
 
 # omi-cli
 
-CLI for [Omi](https://github.com/AlloyTeam/omi) projects - [Omi框架](https://github.com/AlloyTeam/omi) 的命令行工具
+[Omi框架](https://github.com/AlloyTeam/omi) 的命令行工具
 
 ## 简介
 
@@ -177,8 +177,12 @@ Omi框架的style方法返回的字符串会生成为组件的局部CSS。
 
 #### English | [﻿中文](https://github.com/AlloyTeam/omi-cli#中文--english)
 
+# omi-cli
+
+CLI for [Omi](https://github.com/AlloyTeam/omi) projects.
 
 ## Introduction
+
 Prerequisites: Node.js (>=6.x), npm version 3+
 
 ```
