@@ -32,17 +32,16 @@ $ omi init app -m cnpm
     * [npm run dist](#npm-run-dist)
 * [代码分割](#代码分割)
 * [兼容 IE8](#兼容-ie8)
-* [插入 CSS](#插入css)
-* [插入组件局部 CSS](#插入组件局部css)
-* 插入 Less
-* 插入组件局部 Less
-* 导入组件
-* 导入图片、字体、SVG 等文件
-* 修改配置
-    * 修改 CDN 地址
-    * 修改 webserver 和 port
-    * 修改 route
-
+* [插入 CSS](#插入-css)
+* [插入组件局部 CSS](#插入组件局部-css)
+* [插入 Less](#插入-less)
+* [插入组件局部 Less](#插入组件局部-less)
+* [导入组件](#导入组件)
+* [导入图片、字体、SVG 等文件](#导入图片字体svg-等文件)
+* [修改配置](#修改配置)
+    * [修改 CDN 地址](#修改-cdn-地址)
+    * [修改 webserver 和 port](#修改-webserver-和-port)
+    * [修改 route](#修改-route)
                 
 ### 文件目录
 
