@@ -81,10 +81,18 @@ var baseConfig = {
 var styleRules = {
     'scoped.css':{
         test: /[\S]*_[\S]*\.css$/,
-        // 单独抽出样式文件
         use: [
             'to-string-loader',
             'css-loader'
+        ],
+        include: path.resolve(config.webpack.path.src)
+    },
+    'scoped.less':{
+        test: /[\S]*_[\S]*\.less$/,
+        use: [
+            'to-string-loader',
+            'css-loader',
+            'less-loader'
         ],
         include: path.resolve(config.webpack.path.src)
     },
@@ -111,6 +119,7 @@ var styleRules = {
     },
     less: {
         test: /\.less$/,
+        exclude:/[\S]*_[\S]*\.less$/,
         loader: ExtractTextPlugin.extract({
             fallback: 'style-loader', 
             use: [
