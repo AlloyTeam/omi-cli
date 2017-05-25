@@ -51,7 +51,7 @@ $ omi init app -m cnpm
 my-app/
   config
     project.js
-    steamer.config.js
+    config.js
   src/
     component
     css
@@ -264,13 +264,13 @@ logo.svg会被动态转成base64。我们可以为每种类型都对应webpack�
 
 ### 修改配置
 
-打开 `steamer.config.js`，其位置如下:
+打开 `config.js`，其位置如下:
 
 ```
 my-app/
   config
     project.js
-    **steamer.config.js**
+    **config.js**
 ```
 
 打开之后可以看到

@@ -4,7 +4,7 @@ const path = require('path'),
       os = require('os'),
       webpack = require('webpack'),
       utils = require('steamer-webpack-utils'),
-      steamerConfig = require('./steamer.config'),
+      steamerConfig = require('./config'),
       __basename = path.dirname(__dirname),
       __env = process.env.NODE_ENV,
       isProduction = __env === 'production';
