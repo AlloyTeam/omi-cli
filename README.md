@@ -81,6 +81,7 @@ my-app/
 my-app/
   dist/
     chunk
+    component
     css
     img
     js
@@ -89,6 +90,8 @@ my-app/
     index.html
     page-b.html
 ```
+
+component会保留其依赖的某些资源文件，chunk会输出分割出来的模板，怎么分割请往下看。
 
 ### 代码分割
 
