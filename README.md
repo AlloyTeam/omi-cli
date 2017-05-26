@@ -226,7 +226,7 @@ Omi框架的style方法返回的字符串会生成为组件的局部CSS，`_inde
 
 如上面一节定义了`Intro`组件，利用复用。那么怎么在其他组件中使用?
 
-```
+``` js
 import Intro from '../intro/index.js'
 
 Omi.tag('intro',Intro)
@@ -256,7 +256,7 @@ export default XXX
 
 如上面的例子:
 
-```
+``` js
 import logo from './logo.svg'
 ```
 
