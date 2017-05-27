@@ -34,6 +34,7 @@ $ omi init app -m cnpm
 * [兼容 IE8](#兼容-ie8)
 * [插入 CSS](#插入-css)
 * [插入组件局部 CSS](#插入组件局部-css)
+* [局部CSS使用图片](#局部css使用图片)
 * [插入 Less](#插入-less)
 * [插入组件局部 Less](#插入组件局部-less)
 * [导入组件](#导入组件)
@@ -184,6 +185,44 @@ class Hello extends Omi.Component {
 Omi框架的style方法返回的字符串会生成为组件的局部CSS，`_hello.css`文件会在运行时动态插入到head里面。
 
   需要特别注意的是: 组件的局部CSS必须使用下划线开头，如`_xxx.css`，`_aaa-bbb.css`,不然会被识别成全局CSS插入到head里。
+
+### 局部CSS使用图片
+
+当然不是必须require外部的css文件，也可以直接写在style方法内，组件的依赖的图片资源也在组件的目录内:
+
+```
+my-app/
+  src/
+    component
+        hello
+            index.js
+            pen.png
+            pencil.png
+
+```
+
+对应的index.js如下所示:
+
+``` js
+class Hello extends Omi.Component {
+  constructor(data, option){
+      super(data, option)
+  }
+  
+  style(){
+    return `
+        .icon-pen {
+            background-image: url(${require('./pen.png')});
+        }
+        .icon-pencil {
+            background-image: url(${require('./pencil.png')});
+        }
+    `
+  }
+  ...
+  ...
+}
+```
 
 ### 插入 Less
 
