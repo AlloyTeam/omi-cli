@@ -1,3 +1,4 @@
+import tpl from './index.html'
 
 class Intro extends Omi.Component {
   constructor(data, option){
@@ -9,12 +10,7 @@ class Intro extends Omi.Component {
   }
 
   render() {
-
-    return `
-          <p class="app-intro">
-          To get started, edit <code>src/component/hello.js</code> and save to reload.
-        </p>
-    `
+    return tpl
   }
 }
 
