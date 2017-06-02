@@ -3,9 +3,10 @@
 // 用于webpack构建，区分开发与生产环境相关配置
 
 const utils = require('steamer-webpack-utils'),
-	  webpack = require('webpack'),
-	  fs = require('fs'),
-	opn = require('opn')
+	webpack = require('webpack'),
+	fs = require('fs'),
+	opn = require('opn'),
+	config = require("../config/config")
 
 
 var argv = utils.getArgvs(),
@@ -19,7 +20,7 @@ if (mode === 'development') {
 
 	require('./server');
 
-	opn('http://localhost:9000');
+	opn('http://localhost:' + config.port);
 }
 else if (mode === 'production' || mode === 'source'){
 	process.env.NODE_ENV = isProduction ? "production" : "development";

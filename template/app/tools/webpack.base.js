@@ -96,6 +96,24 @@ var styleRules = {
         ],
         include: path.resolve(config.webpack.path.src)
     },
+    'scoped.stylus':{
+        test: /[\S]*_[\S]*\.styl$/,
+        use: [
+            'to-string-loader',
+            'css-loader',
+            'stylus-loader'
+        ],
+        include: path.resolve(config.webpack.path.src)
+    },
+    'scoped.sass':{
+        test: /[\S]*_[\S]*\.s(a|c)ss$/,
+        use: [
+            'to-string-loader',
+            'css-loader',
+            'sass-loader'
+        ],
+        include: path.resolve(config.webpack.path.src)
+    },
     css: {
         test: /\.css$/,
         exclude:/[\S]*_[\S]*\.css$/,
@@ -147,6 +165,7 @@ var styleRules = {
     },
     stylus: {
         test: /\.styl$/,
+        exclude:/[\S]*_[\S]*\.styl$/,
         loader: ExtractTextPlugin.extract({
             fallback: 'style-loader', 
             use: [
@@ -174,6 +193,7 @@ var styleRules = {
     },
     sass: {
         test: /\.s(a|c)ss$/,
+        exclude:/[\S]*_[\S]*\.s(a|c)ss$/,
         loader: ExtractTextPlugin.extract({
             fallback: 'style-loader', 
             use: [

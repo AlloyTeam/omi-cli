@@ -1,6 +1,6 @@
 {
-  "name": "steamer-simple",
-  "version": "2.0.0-beta.7",
+  "name": "your-website-name",
+  "version": "0.1.0",
   "description": "simple-webpack-boilerplate",
   "main": "./.steamer/steamer-simple.js",
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SteamerTeam/steamer-simple.git"
+    "url": "git+https://github.com/AlloyTeam/omi-cli.git"
   },
   "keywords": [
     "steamer starterkit",
@@ -26,12 +26,12 @@
     "boilerplate",
     "starter-kit"
   ],
-  "author": "SteamerTeam",
+  "author": "AlloyTeam",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SteamerTeam/steamer-simple/issues"
+    "url": "https://github.com/AlloyTeam/omi-cli/issues"
   },
-  "homepage": "https://github.com/SteamerTeam/steamer-simple#readme",
+  "homepage": "https://github.com/AlloyTeam/omi-cli",
   "browserslist": [
     "last 8 versions"
   ],

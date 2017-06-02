@@ -63,7 +63,7 @@ var config = {
 
         // 预编译器，默认支持css 和 less. sass, scss 和 stylus 由npm-install-webpack-plugin自动安装
         style: [
-            "scoped.less","scoped.css", "css", "less"
+            "scoped.less","scoped.css","scoped.stylus","scoped.sass", "css", "less","stylus","sass"
         ],
         // 生产环境是否提取css
         extractCss: true,
