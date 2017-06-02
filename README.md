@@ -2,7 +2,7 @@
 
 # omi-cli
 
-[Omi框架](https://github.com/AlloyTeam/omi) 的命令行工具
+Create website with no build configuration - 创建网站无需任何配置。对[Omi框架](https://github.com/AlloyTeam/omi)集成十分友好但不必须。
 
 ## 简介
 
