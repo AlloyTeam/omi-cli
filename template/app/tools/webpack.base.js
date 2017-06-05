@@ -80,7 +80,7 @@ var baseConfig = {
 // 样式loader
 var styleRules = {
     'scoped.css':{
-        test: /[\S]*_[\S]*\.css$/,
+        test: /[\\|\/]_[\S]*\.css$/,
         use: [
             'to-string-loader',
             'css-loader'
@@ -88,7 +88,7 @@ var styleRules = {
         include: path.resolve(config.webpack.path.src)
     },
     'scoped.less':{
-        test: /[\S]*_[\S]*\.less$/,
+        test: /[\\|\/]_[\S]*\.less$/,
         use: [
             'to-string-loader',
             'css-loader',
@@ -97,7 +97,7 @@ var styleRules = {
         include: path.resolve(config.webpack.path.src)
     },
     'scoped.stylus':{
-        test: /[\S]*_[\S]*\.styl$/,
+        test: /[\\|\/]_[\S]*\.styl$/,
         use: [
             'to-string-loader',
             'css-loader',
@@ -106,7 +106,7 @@ var styleRules = {
         include: path.resolve(config.webpack.path.src)
     },
     'scoped.sass':{
-        test: /[\S]*_[\S]*\.s(a|c)ss$/,
+        test: /[\\|\/]_[\S]*\.s(a|c)ss$/,
         use: [
             'to-string-loader',
             'css-loader',
@@ -116,7 +116,7 @@ var styleRules = {
     },
     css: {
         test: /\.css$/,
-        exclude:/[\S]*_[\S]*\.css$/,
+        exclude: /[\\|\/]_[\S]*\.css$/,
         // 单独抽出样式文件
         loader: ExtractTextPlugin.extract({
             fallback: 'style-loader',
@@ -138,7 +138,7 @@ var styleRules = {
     },
     less: {
         test: /\.less$/,
-        exclude:/[\S]*_[\S]*\.less$/,
+        exclude: /[\\|\/]_[\S]*\.less$/,
         loader: ExtractTextPlugin.extract({
             fallback: 'style-loader', 
             use: [
@@ -165,7 +165,7 @@ var styleRules = {
     },
     stylus: {
         test: /\.styl$/,
-        exclude:/[\S]*_[\S]*\.styl$/,
+        exclude: /[\\|\/]_[\S]*\.styl$/,
         loader: ExtractTextPlugin.extract({
             fallback: 'style-loader', 
             use: [
@@ -193,7 +193,7 @@ var styleRules = {
     },
     sass: {
         test: /\.s(a|c)ss$/,
-        exclude:/[\S]*_[\S]*\.s(a|c)ss$/,
+        exclude: /[\\|\/]_[\S]*\.s(a|c)ss$/,
         loader: ExtractTextPlugin.extract({
             fallback: 'style-loader', 
             use: [
