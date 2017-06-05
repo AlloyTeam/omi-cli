@@ -2,7 +2,7 @@
 
 # omi-cli
 
-Create website with no build configuration - 创建网站无需任何配置。对[Omi框架](https://github.com/AlloyTeam/omi)集成十分友好但不必须。
+创建网站无需任何配置。对[Omi框架](https://github.com/AlloyTeam/omi)集成十分友好但不必须。
 
 ## 简介
 
@@ -371,7 +371,7 @@ module.exports = {
 
 # omi-cli
 
-CLI for [Omi](https://github.com/AlloyTeam/omi) projects.
+Create website with no build configuration. be friendly to [Omi](https://github.com/AlloyTeam/omi) framework.
 
 ## Introduction
 
@@ -400,6 +400,7 @@ we support to shift from default to `npm`, `cnpm` or `taobao` mirror.
 |---|---|---|
 |  [pasturn](https://github.com/pasturn) |  ![](https://avatars2.githubusercontent.com/u/6126885?v=3&s=60)  | Mars Holding  |  
 |  [heyli](https://github.com/lcxfs1991) | ![](https://avatars3.githubusercontent.com/u/3348398?v=3&s=60)  |  Tencent |
+|  [vorshen](https://github.com/vorshen) | ![](https://avatars2.githubusercontent.com/u/10334783?v=3&s=60)  |  Tencent |
 |  [dntzhang](https://github.com/dntzhang) | ![](https://avatars2.githubusercontent.com/u/7917954?v=3&s=60)  |  Tencent |
 
 # License
