@@ -1,5 +1,5 @@
 {
-  	"plugins": [],
+    "plugins": ["syntax-dynamic-import"],
     "presets": [
         ["es2015", {"loose": true, "module": false}]
     ]

@@ -10,15 +10,18 @@ class Hello extends Omi.Component {
   }
 
   handleClick(){
-    require.ensure(['./a.js'], function() {
-      let a = require("./a.js")
-      // ...
+    //require.ensure(['./a.js'], function() {
+    //  let moduleA = require("./a.js")
+    //
+    //  console.log(moduleA)
+    //
+    //  document.body.innerHTML+=`<img src="${moduleA.src}">`
+    //});
 
-      console.log(a)
-
-      document.body.innerHTML+=`<img src="${a.src}">`
+    import("./a.js").then(function(moduleA) {
+      console.log(moduleA);
+      document.body.innerHTML+=`<img src="${moduleA.src}">`
     });
-
   }
 
   style(){

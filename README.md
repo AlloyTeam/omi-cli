@@ -137,8 +137,18 @@ class Hello extends Omi.Component {
     `
   }
 }
-
 ```
+
+上面是老的方式，webpack2更加建议使用一种"类函数式(function-like)"的 import() 模块加载语法。如:
+
+```js
+import("./a.js").then(function(moduleA) {
+  console.log(moduleA);
+  document.body.innerHTML+=`<img src="${moduleA.src}">`
+});
+```
+
+这样也能达到同样的效果，当然你也[可以使用async/await](https://doc.webpack-china.org/guides/code-splitting-async/#-babel-async-await)。
 
 ### 兼容 IE8
 
