@@ -275,7 +275,7 @@ config.custom = {
     // webpack externals
     getExternals: function() {
         return {
-            '$': "zepto",
+            //'$': "zepto",
         };
     },
 
