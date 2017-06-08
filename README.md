@@ -309,6 +309,32 @@ export default XXX
 
 通过`Omi.tag('intro',Intro)`把组件Intro生成为可以声明式的标签。注意便签名字要使用小写，多个单词使用中划线，如:`my-intro`、`app-header`等。
 
+特别需要注意的是每个组件必须要要闭合成一个节点，比如:
+
+错误写法:
+
+```
+  render() {
+    return `
+        <div>a</div>
+        <div>b</div>
+    `
+  }
+```
+
+正确写法:
+
+```
+  render() {
+    return `
+        <div>
+            <div>a</div>
+            <div>b</div>
+        <div>`
+  }
+```
+
+
 ### 导入图片、字体、SVG 等文件
 
 如上面的例子:
