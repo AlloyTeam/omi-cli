@@ -152,7 +152,12 @@ import("./a.js").then(function(moduleA) {
 
 ### 兼容 IE8
 
-Omi框架是可以兼容IE8的。
+Omi框架拥有四个版本，其中三个是可以兼容IE8的。
+
+* omi.js 支持到**IE9**，使用 [sodajs](https://github.com/AlloyTeam/sodajs) 为内置指令系统
+* omi.art.js 支持IE8，使用 [art-template](https://github.com/aui/art-template)为内置模版引擎
+* omi.lite.js 支持IE8，不包含任何模板引擎
+* omi.mustache.js 支持IE8，使用 [mustache.js](https://github.com/janl/mustache.js)为内置模版引擎
 
 由于使用了`webpack-hot-middleware`, 开发过程**不兼容**IE8，但是没关系，`npm run dist `生成的发布代码是兼容IE8。
 
