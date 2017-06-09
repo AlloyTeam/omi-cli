@@ -345,6 +345,18 @@ import logo from './logo.svg'
 
 logo.svg会被动态转成base64。我们可以为每种类型都对应webpack里的一个loader来处理所有的文件类型。
 
+图片也是类似:
+
+``` js
+import logo from '../../img/omi.png'
+```
+
+当然也支持require:
+
+``` js
+const logo = require('../../img/omi.png')
+```
+
 ### 修改配置
 
 打开 `config.js`，其位置如下:
