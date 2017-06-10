@@ -24,6 +24,12 @@ $ omi init app -m cnpm
 
 支持 `npm`, `cnpm` 和 `taobao` 。
 
+当然omi-cli还有一个特殊命令:
+
+``` js
+$ npm run ie    //用于生成未压缩js的发布包用来定位ie8的问题
+```
+
 ## 用户指南
 
 * [文件目录](#文件目录)
@@ -161,7 +167,13 @@ Omi框架拥有四个版本，其中三个是可以兼容IE8的。
 
 由于使用了`webpack-hot-middleware`, 开发过程**不兼容**IE8，但是没关系，`npm run dist `生成的发布代码是兼容IE8。
 
-需要主要的是，你需要在你的HTML里引用es5-sham或者es5-shim。如:
+定位IE8问题可以使用:
+
+``` js
+$ npm run ie    //用于生成未压缩js的发布包用来定位ie8的问题
+```
+
+需要注意的是，你需要在你的HTML里引用es5-sham或者es5-shim。如:
 
 ```js
 <!--[if lt IE 9]>
@@ -436,6 +448,11 @@ $ omi init app -m cnpm
 
 we support to shift from default to `npm`, `cnpm` or `taobao` mirror.
 
+other cmd:
+
+``` js
+$ npm run ie    //for debugging in ie8 
+```
 
 ## Contributors
 
