@@ -307,7 +307,7 @@ if (isProduction) {
     baseConfig.plugins.push(new webpack.DefinePlugin(configWebpack.injectVar));
     baseConfig.plugins.push(new WebpackMd5Hash());
 
-    if (configWebpack.compress) {
+    if (process.env.npm_lifecycle_event !== 'ie'  && configWebpack.compress) {
         baseConfig.plugins.push(new UglifyJsParallelPlugin({
             workers: os.cpus().length, // usually having as many workers as cpu cores gives good results 
             // other uglify options

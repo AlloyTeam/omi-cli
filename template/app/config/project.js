@@ -250,6 +250,10 @@ config.custom = {
                     options: {
                         cacheDirectory: './.webpack_cache/',
                     },
+                    plugins : [
+                        "transform-es3-property-literals",
+                        "transform-es3-member-expression-literals"
+                    ]
                 }],
             }));
         }
