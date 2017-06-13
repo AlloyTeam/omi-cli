@@ -19,7 +19,8 @@ var Clean = require('clean-webpack-plugin'),
     WebpackMd5Hash = require('webpack-md5-hash'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     UglifyJsParallelPlugin = require('webpack-uglify-parallel'),
-    NpmInstallPlugin  = require('npm-install-webpack-plugin-steamer');
+    NpmInstallPlugin  = require('npm-install-webpack-plugin-steamer'),
+    UglifyJS = require("uglify-js");
 
 var baseConfig = {
     context: configWebpack.path.src,
@@ -318,7 +319,8 @@ if (isProduction) {
             mangle: {
                 screw_ie8: false
             },
-            output: { screw_ie8: false }
+            output: { screw_ie8: false },
+            ie8:true
         }));
     }
 }
@@ -330,10 +332,32 @@ if (configWebpack.clean) {
     baseConfig.plugins.push(new Clean([isProduction ? configWebpack.path.dist : configWebpack.path.dev], {root: path.resolve()}));
 }
 
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
 configWebpack.static.forEach((item) => {
     baseConfig.plugins.push(new CopyWebpackPlugin([{
         from: item.src,
-        to: (item.dist || item.src) + (item.hash ? configWebpack.hashName : "[name]") + '.[ext]'
+        to: (item.dist || item.src) + (item.hash ? configWebpack.hashName : "[name]") + '.[ext]',
+        transform:function(content, path) {
+            if(process.env.npm_lifecycle_event !== 'ie'&& endsWith(path,'.js') ) {
+                var result = UglifyJS.minify(content.toString(), {
+                    compress: {
+                        warnings: false
+
+                    },
+                    mangle: {},
+                    output: {},
+                    ie8: true
+                });
+                if (result.error) throw result.error;
+
+                return result.code;
+            }else{
+                return content
+            }
+        }
     }]));
 });
 
