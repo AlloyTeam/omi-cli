@@ -49,7 +49,10 @@ $ npm run ie    //用于生成未压缩js的发布包用来定位ie8的问题
     * [修改 CDN 地址](#修改-cdn-地址)
     * [修改 webserver 和 port](#修改-webserver-和-port)
     * [修改 route](#修改-route)
-                
+               
+
+你可能还感兴趣的文档: [精通Omi框架](https://github.com/AlloyTeam/omi/blob/master/tutorial/all.md)
+
 ### 文件目录
 
 执行完`omi init my-app`，你可以看到会生成如下的基础目录结构
