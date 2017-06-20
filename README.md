@@ -49,7 +49,8 @@ $ npm run ie    //用于生成未压缩js的发布包用来定位ie8的问题
     * [修改 CDN 地址](#修改-cdn-地址)
     * [修改 webserver 和 port](#修改-webserver-和-port)
     * [修改 route](#修改-route)
-               
+* [创建新页面](#创建新页面)
+           
 
 你可能还感兴趣的文档: [精通Omi框架](https://github.com/AlloyTeam/omi/blob/master/tutorial/all.md)
 
@@ -424,6 +425,15 @@ module.exports = {
     "route": "/user/",
 };
 ```
+
+### 创建新页面
+
+```
+npm run tpl --tpl=index --path=detail
+```
+
+通过上面命令，就会在你的page目录下创建detail页面目录以及相关的资源。
+
 
 #### English | [﻿中文](https://github.com/AlloyTeam/omi-cli#中文--english)
 
