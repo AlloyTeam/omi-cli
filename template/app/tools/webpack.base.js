@@ -341,7 +341,8 @@ configWebpack.static.forEach((item) => {
         from: item.src,
         to: (item.dist || item.src) + (item.hash ? configWebpack.hashName : "[name]") + '.[ext]',
         transform:function(content, path) {
-            if(process.env.npm_lifecycle_event !== 'ie'&& endsWith(path,'.js') ) {
+            var nle = process.env.npm_lifecycle_event
+            if((nle === 'dist'||nle === 'pub'||nle === 'build')&& endsWith(path,'.js') ) {
                 var result = UglifyJS.minify(content.toString(), {
                     compress: {
                         warnings: false
