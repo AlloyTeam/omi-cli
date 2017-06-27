@@ -108,7 +108,9 @@ component会保留其依赖的某些资源文件，chunk会输出分割出来的
 ```js
 import logo from '../../img/omi.png'
 
-module.exports = { src: logo }
+export function getSrc(){
+    return logo
+}
 ```
 
 通过require.ensure进行按需使用，在用户点击事件触发之后才会进行加载a.js以及a.js的所有依赖，如下面代码所示:
@@ -121,8 +123,8 @@ class Hello extends Omi.Component {
 
   handleClick(){
     require.ensure(['./a.js'], function() {
-      var a = require("./a.js")
-      document.body.innerHTML+=`<img src="${a.src}">`
+      let moduleA = require("./a.js")
+      document.body.innerHTML+=`<img src="${moduleA.getSrc()}">`
     })
   }
 
@@ -149,9 +151,8 @@ class Hello extends Omi.Component {
 
 ```js
 import("./a.js").then(function(moduleA) {
-  console.log(moduleA);
-  document.body.innerHTML+=`<img src="${moduleA.src}">`
-});
+  document.body.innerHTML+=`<img src="${moduleA.getSrc()}">`
+})
 ```
 
 这样也能达到同样的效果，当然你也[可以使用async/await](https://doc.webpack-china.org/guides/code-splitting-async/#-babel-async-await)。
