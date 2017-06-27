@@ -11,7 +11,8 @@ var config = require('../config/project'),
     configWebpackMerge = config.webpackMerge,
     configCustom = config.custom,
     isProduction = config.env === 'production',
-    isWindows = (os.type() === "Windows_NT");
+    isWindows = (os.type() === "Windows_NT"),
+    basecConfig = require('../config/config');
 
 var Clean = require('clean-webpack-plugin'),
     CopyWebpackPlugin = require("copy-webpack-plugin-hash"),
@@ -20,7 +21,8 @@ var Clean = require('clean-webpack-plugin'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     UglifyJsParallelPlugin = require('webpack-uglify-parallel'),
     NpmInstallPlugin  = require('npm-install-webpack-plugin-steamer'),
-    UglifyJS = require("uglify-js");
+    UglifyJS = require("uglify-js"),
+    BabiliPlugin = require("babili-webpack-plugin");
 
 var baseConfig = {
     context: configWebpack.path.src,
@@ -309,19 +311,23 @@ if (isProduction) {
     baseConfig.plugins.push(new WebpackMd5Hash());
 
     if (process.env.npm_lifecycle_event !== 'ie'  && configWebpack.compress) {
-        baseConfig.plugins.push(new UglifyJsParallelPlugin({
-            workers: os.cpus().length, // usually having as many workers as cpu cores gives good results 
-            // other uglify options
-            compress: {
-                warnings: false,
-                screw_ie8 : false
-            },
-            mangle: {
-                screw_ie8: false
-            },
-            output: { screw_ie8: false },
-            ie8:true
-        }));
+        if(basecConfig.babili) {
+            baseConfig.plugins.push(new BabiliPlugin())
+        }else {
+            baseConfig.plugins.push(new UglifyJsParallelPlugin({
+                workers: os.cpus().length, // usually having as many workers as cpu cores gives good results
+                // other uglify options
+                compress: {
+                    warnings: false,
+                    screw_ie8 : false
+                },
+                mangle: {
+                    screw_ie8: false
+                },
+                output: { screw_ie8: false },
+                ie8:true
+            }));
+        }
     }
 }
 else {

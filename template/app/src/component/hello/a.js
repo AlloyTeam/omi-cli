@@ -1,4 +1,6 @@
-import logo from '../../img/omi.png';
+import logo from '../../img/omi.png'
 
 
-module.exports = { src: logo };
+export function getSrc(){
+    return logo
+}

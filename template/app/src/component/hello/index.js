@@ -15,12 +15,12 @@ class Hello extends Omi.Component {
     //
     //  console.log(moduleA)
     //
-    //  document.body.innerHTML+=`<img src="${moduleA.src}">`
+    //  document.body.innerHTML+=`<img src="${moduleA.getSrc()}">`
     //});
 
     import("./a.js").then(function(moduleA) {
-      console.log(moduleA);
-      document.body.innerHTML+=`<img src="${moduleA.src}">`
+      //console.log(moduleA);
+      document.body.innerHTML+=`<img src="${moduleA.getSrc()}">`
     });
   }
 
