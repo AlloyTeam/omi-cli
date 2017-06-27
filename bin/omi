@@ -18,7 +18,7 @@ var options = {
 program
     .version(require('../package').version, '-v, --version')
     .usage('<cmd> [project-name]')
-    .option('-m, --mirror <mirror>', 'Select mirror like: npm, cnpm, taobao', /^(npm|cnpm|taobao|nj|rednpm|skimdb)$/i)
+    .option('-m, --mirror <mirror>', 'Select mirror like: npm, cnpm, taobao', /^(npm|cnpm|taobao|nj|rednpm|skimdb|yarn)$/i)
     .option('-l, --language <language>', 'Select language: en / cn', selectLanguage)
     .on('-h, --help', help);
 
@@ -28,7 +28,7 @@ program
     .description('Initialize a new Omi application in the current folder')
     .action(function(projectName, option){
         var cmd = 'init';
-        if(option.parent.mirror){
+        if(option.parent.mirror && typeof option.parent.mirror === "string"){
             options.mirror = option.parent.mirror;
         }
         switchCommand(cmd, {project: projectName, mirror: options.mirror, language: options.language})
@@ -39,7 +39,7 @@ program
     .description('Initialize a new Omi-Pr in the current folder')
     .action(function(projectName, option){
         var cmd = 'init-pr';
-        if(option.parent.mirror){
+        if(option.parent.mirror && typeof option.parent.mirror === "string"){
             options.mirror = option.parent.mirror;
         }
         switchCommand(cmd, {project: projectName, mirror: options.mirror, language: options.language})

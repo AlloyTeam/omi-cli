@@ -22,7 +22,7 @@ $ npm run dist               //生成发布文件
 $ omi init app -m cnpm 
 ```
 
-支持 `npm`, `cnpm` 和 `taobao` 。
+支持 `npm`， `taobao`等镜像, 如果你的系统安装了yarn或者cnpm，也可以将参数设为yarn或者cnpm进行安装。
 
 
 ## 用户指南
