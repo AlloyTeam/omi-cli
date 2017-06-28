@@ -46,7 +46,7 @@ $ omi init app -m cnpm
     * [修改 route](#修改-route)
 * [切换uglify和babili](#切换uglify和babili)
 * [创建新页面](#创建新页面)
-           
+* 创建新组件(即将到来)      
 
 你可能还感兴趣的文档: [精通Omi框架](https://github.com/AlloyTeam/omi/blob/master/tutorial/all.md)
 

@@ -57,6 +57,7 @@ var config = {
         clean: true,
         // sourcemap
         sourceMap: {
+            //也可以设置成 cheap-module-source-map
             development: "inline-source-map",
             production: false,
         },
