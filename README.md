@@ -433,6 +433,26 @@ module.exports = {
     "route": "/user/",
 };
 ```
+
+举个例子,如:
+
+```
+module.exports = {
+    "webserver": "//qun.qq.com/qqweb/m/qun/effect/",
+    "cdn": "//s.url.cn/qqun/qun/qqweb/m/qun/effect/",
+    "port": "9000",
+    "route": "/qqweb/m/qun/effect/",
+};
+```
+
+在fiddler 的 willow 或者其他工具配置HOST:
+
+```
+127.0.0.1:9000 qun.qq.com s.url.cn
+```
+
+你现在就可通过url:  `http://qun.qq.com/qqweb/m/qun/effect/index.html` 访问网站了,这样调试AJAX就不要出现跨域问题。
+
 ### 切换uglify和babili
 
 ```
