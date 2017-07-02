@@ -44,7 +44,7 @@ $ omi init app -m cnpm
     * [修改 CDN 地址](#修改-cdn-地址)
     * [修改 webserver 和 port](#修改-webserver-和-port)
     * [修改 route](#修改-route)
-* [切换uglify和babili](#切换uglify和babili)
+* [切换 uglify 和 babili](#切换uglify和babili)
 * [创建新页面](#创建新页面)
 * 创建新组件(即将到来)      
 
