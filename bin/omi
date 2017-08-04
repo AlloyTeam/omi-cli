@@ -46,6 +46,17 @@ program
     })
 
 program
+    .command('init-x [projectName]')
+    .description('Initialize a new omix project in the current folder')
+    .action(function(projectName, option){
+        var cmd = 'init-x';
+        if(option.parent.mirror && typeof option.parent.mirror === "string"){
+            options.mirror = option.parent.mirror;
+        }
+        switchCommand(cmd, {project: projectName, mirror: options.mirror, language: options.language})
+    })
+
+program
     .command('pr')
     .description('Compile your omi project')
     .action(function(option){
