@@ -283,7 +283,7 @@ config.custom = {
     getExternals: function() {
         return {
             //'$': "zepto",
-            omi : 'Omi'
+            omix : 'Omi'
         };
     },
 
