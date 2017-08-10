@@ -272,7 +272,8 @@ config.custom = {
                 cssPublicPath: isProduction ? config.webpack.cssCdn : config.webpack.webserver,
                 templateContent: function(tpl) {
                     return tpl;
-                }
+                },
+                removeUnMatchedAssets: true,
             }));
         }); 
 
