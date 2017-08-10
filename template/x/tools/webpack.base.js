@@ -47,9 +47,6 @@ var baseConfig = {
                 exclude: /node_modules/,
             },
             {
-                loader: 'virtual-dom-loader?jsx=Omi.x'
-            },
-            {
                 test: /\.ico$/,
                 loader: "url-loader",
                 options: {

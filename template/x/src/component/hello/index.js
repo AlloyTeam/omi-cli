@@ -9,6 +9,10 @@ class Hello extends Omi.Component {
 
   handleClick(){
       alert('Hello Omix !')
+      import("./a.js").then(function(moduleA) {
+          //console.log(moduleA);
+          document.body.innerHTML+=`<img src="${moduleA.getSrc()}">`
+      });
   }
 
   style(){

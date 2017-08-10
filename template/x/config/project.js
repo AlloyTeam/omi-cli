@@ -219,9 +219,9 @@ config.custom = {
         }
 
         module.rules.push(jsRule);
-         module.rules.push({
-             loader: 'virtual-dom-loader?jsx=Omi.x'
-         });
+         //module.rules.push({
+         //    loader: 'virtual-dom-loader?jsx=Omi.x'
+         //});
         return module;
     },
 
