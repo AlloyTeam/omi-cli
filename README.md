@@ -2,7 +2,7 @@
 
 # omi-cli
 
-创建网站无需任何配置。对[Omi框架](https://github.com/AlloyTeam/omi)集成十分友好但不必须。
+创建网站无需任何配置。对[Omi框架](https://github.com/AlloyTeam/omi) 或者 [Omix框架](https://github.com/AlloyTeam/omix) 集成十分友好。
 
 ## 简介
 
