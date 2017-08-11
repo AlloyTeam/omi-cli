@@ -2,7 +2,7 @@
 
 # omi-cli
 
-创建网站无需任何配置。对[Omi框架](https://github.com/AlloyTeam/omi)集成十分友好但不必须。
+创建网站无需任何配置。对 [Omi框架](https://github.com/AlloyTeam/omi) 或者 [Omix框架](https://github.com/AlloyTeam/omix) 集成十分友好。
 
 ## 简介
 
@@ -16,7 +16,13 @@ $ npm start                  //开发
 $ npm run dist               //生成发布文件   
 ```
 
-脚手架完全基于 webpack2. 执行 `omi init` 的过程中会自动安装npm依赖包，请耐心等待。国内用户可通过下面的命令切换npm镜像:
+也可以初始化 [Omix](https://github.com/AlloyTeam/omix) 的项目:
+
+```
+omi init-x [project name]
+```
+
+脚手架完全基于 webpack2+. 执行 `omi init` 或 `omi init-x` 的过程中会自动安装npm依赖包，请耐心等待。国内用户可通过下面的命令切换npm镜像:
 
 ```
 $ omi init app -m cnpm 
