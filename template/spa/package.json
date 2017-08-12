@@ -37,7 +37,7 @@
     "last 8 versions"
   ],
   "dependencies": {
-    "omi-router": "^0.3.1"
+    "omi-router": "^0.3.2"
   },
   "devDependencies": {
     "alloyfinger": "^0.1.8",

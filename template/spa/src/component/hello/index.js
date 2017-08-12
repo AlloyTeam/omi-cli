@@ -30,18 +30,11 @@ class Hello extends Omi.Component {
     install(){
         OmiRouter.init({
             routes: [
-                {path: '/about', component: 'About', lazy: true}
+                {path: '/about', component: () => import("../intro/index.js")}
             ],
             renderTo: "#view",
             defaultRoute: '/',
-            root: this,
-            beforeRoute:function(data){
-                if(data.route.component === 'About'){
-                    import("../intro/index.js").then(function(About) {
-                            Omi.render(new About.default(), "#view")
-                        })
-                }
-            }
+            root: this
         })
     }
 
