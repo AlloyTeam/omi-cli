@@ -1,5 +1,5 @@
 /*!
- *  omix v1.1.8 By dntzhang 
+ *  omix v1.1.12 By dntzhang 
  *  Github: https://github.com/AlloyTeam/omix
  *  MIT Licensed.
  */
@@ -226,14 +226,19 @@ Omi.getConstructor = function (name) {
     }
 };
 
+function isServer() {
+    return !(typeof window !== 'undefined' && window.document);
+}
+
 Omi.render = function (component, renderTo, option) {
+    if (isServer()) return;
     component.renderTo = typeof renderTo === 'string' ? document.querySelector(renderTo) : renderTo;
     if (typeof option === 'boolean') {
         component._omi_increment = option;
     } else if (option) {
         component._omi_increment = option.increment;
         if (option.ssr) {
-            component.data = Object.assign({}, JSON.parse(document.getElementById('__omix-ssr-data').value), component.data);
+            component.data = Object.assign({}, window.__omiSsrData, component.data);
         }
     }
     component.install();
@@ -294,7 +299,7 @@ function spreadStyle() {
 }
 
 function stringifyData(component) {
-    return '<input type="hidden" id="__omix-ssr-data" value=\'' + JSON.stringify(component.data) + '\' />';
+    return '<script>window.__omiSsrData=' + JSON.stringify(component.data) + '</script>';
 }
 
 Omi.renderToString = function (component) {
@@ -1320,10 +1325,7 @@ var Component = function () {
     function Component(data) {
         _classCallCheck(this, Component);
 
-        this.data = Object.assign({
-            scopedSelfCss: false,
-            selfDataFirst: false
-        }, data);
+        this.data = data || {};
         this.id = _omi2['default'].getInstanceId();
         this.children = [];
         this._omi_scopedAttr = _omi2['default'].PREFIX + this.id;
@@ -1474,7 +1476,15 @@ var Component = function () {
             var shareAttr = name ? this.data.scopedSelfCss ? this._omi_scopedAttr : _omi2['default'].PREFIX + name.toLowerCase() : this._omi_scopedAttr;
 
             if (this.css) {
-                if (this.data.scopedSelfCss || !_omi2['default'].style[shareAttr]) {
+                if (this.data.closeScopedStyle) {
+                    _omi2['default'].style[shareAttr + '_g'] = this.css;
+                    if (!_omi2['default'].ssr) {
+                        if (this.css !== this._preCss) {
+                            _style2['default'].addStyle(this.css, this.id);
+                            this._preCss = this.css;
+                        }
+                    }
+                } else if (this.data.scopedSelfCss || !_omi2['default'].style[shareAttr]) {
                     if (_omi2['default'].scopedStyle) {
                         this.css = _style2['default'].scoper(this.css, this.data.scopedSelfCss ? '[' + this._omi_scopedAttr + ']' : '[' + shareAttr + ']');
                     }
@@ -1525,6 +1535,7 @@ var Component = function () {
                                 console.warn('The children property will be covered.access it by _children');
                             }
                             instance.data.children = root.children;
+                            instance._using = true;
                             instance.install();
                             instance.beforeRender();
                             instance._render(first);
