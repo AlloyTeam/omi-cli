@@ -17,6 +17,5 @@ class Intro extends Omi.Component {
   }
 }
 
-Omi.tag('intro',Intro)
 
 export default Intro
