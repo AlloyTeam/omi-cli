@@ -1,5 +1,5 @@
 /*!
- *  omix v1.2.0 By dntzhang 
+ *  omix v1.2.2 By dntzhang 
  *  Github: https://github.com/AlloyTeam/omix
  *  MIT Licensed.
  */
@@ -174,6 +174,8 @@ var Omi = {
     tags: (0, _hyperscriptHelpers2['default'])(_h2['default']),
     instances: {},
     _instanceId: 0,
+    _styleId: 0,
+    STYLEPREFIX: '__st_',
     PREFIX: '__s_',
     getInstanceId: function getInstanceId() {
         return Omi._instanceId++;
@@ -183,6 +185,27 @@ var Omi = {
     mapping: {},
     style: {},
     componentConstructor: {}
+};
+
+Omi.getAttr = function (ctor) {
+    if (ctor.is) {
+        return ctor.is;
+    }
+    var inst = Omi.instances,
+        hasAttr = false;
+    for (var key in inst) {
+        if (inst[key].constructor === ctor) {
+            hasAttr = true;
+            ctor.is = Omi.STYLEPREFIX + Omi._styleId;
+            Omi._styleId++;
+            return ctor.is;
+        }
+    }
+    if (!hasAttr) {
+        ctor.is = Omi.STYLEPREFIX + Omi._styleId;
+        Omi._styleId++;
+        return ctor.is;
+    }
 };
 
 Omi.$ = function (selector, context) {
@@ -237,6 +260,7 @@ Omi.render = function (component, renderTo, option) {
         component._omi_increment = option;
     } else if (option) {
         component._omi_increment = option.increment;
+        component.$store = option.store;
         if (option.ssr) {
             component.data = Object.assign({}, window.__omiSsrData, component.data);
         }
@@ -302,8 +326,9 @@ function stringifyData(component) {
     return '<script>window.__omiSsrData=' + JSON.stringify(component.data) + '</script>';
 }
 
-Omi.renderToString = function (component) {
+Omi.renderToString = function (component, store) {
     Omi.ssr = true;
+    component.$store = store;
     component.install();
     component.beforeRender();
     component._render(true);
@@ -312,6 +337,19 @@ Omi.renderToString = function (component) {
     Omi.style = {};
     Omi._instanceId = 0;
     return result;
+};
+
+Omi.getInstanceById = function (id) {
+    if (typeof id === 'number') {
+        var ins = Omi.instances;
+        for (var key in ins) {
+            if (ins.hasOwnProperty(key)) {
+                if (id === ins[key].id) {
+                    return ins[key];
+                }
+            }
+        }
+    }
 };
 
 exports['default'] = Omi;
@@ -690,6 +728,17 @@ if (typeof Object.assign != 'function') {
     }
     return target;
   };
+}
+
+if (Function.prototype.name === undefined && Object.defineProperty !== undefined) {
+  Object.defineProperty(Function.prototype, 'name', {
+    get: function get() {
+      var funcNameRegex = /function\s([^(]{1,})\(/;
+      var results = funcNameRegex.exec(this.toString());
+      return results && results.length > 1 ? results[1].trim() : "";
+    },
+    set: function set(value) {}
+  });
 }
 
 _omi2['default'].Component = _component2['default'];
@@ -1391,7 +1440,6 @@ var Component = function () {
     }, {
         key: 'update',
         value: function update() {
-            this._resetUsing(this);
             this.beforeUpdate();
             // this._childrenBeforeUpdate(this)
             this.beforeRender();
@@ -1519,9 +1567,8 @@ var Component = function () {
     }, {
         key: '_generateCss',
         value: function _generateCss() {
-            var name = this.constructor.is;
             this.css = (this.style() || '').replace(/<\/?style>/g, '');
-            var shareAttr = name ? this.data.scopedSelfCss ? this._omi_scopedAttr : _omi2['default'].PREFIX + name.toLowerCase() : this._omi_scopedAttr;
+            var shareAttr = this.data.scopedSelfCss ? this._omi_scopedAttr : _omi2['default'].getAttr(this.constructor);
 
             if (this.css) {
                 if (this.data.closeScopedStyle) {
@@ -1532,7 +1579,7 @@ var Component = function () {
                             this._preCss = this.css;
                         }
                     }
-                } else if (this.data.scopedSelfCss || !_omi2['default'].style[shareAttr]) {
+                } else if (!_omi2['default'].style[shareAttr]) {
                     if (_omi2['default'].scopedStyle) {
                         this.css = _style2['default'].scoper(this.css, this.data.scopedSelfCss ? '[' + this._omi_scopedAttr + ']' : '[' + shareAttr + ']');
                     }
@@ -1554,8 +1601,8 @@ var Component = function () {
             var ps = root.properties;
             // for scoped css
             if (ps) {
-                if (_omi2['default'].scopedStyle && this.constructor.is) {
-                    ps[_omi2['default'].PREFIX + this.constructor.is.toLowerCase()] = '';
+                if (_omi2['default'].scopedStyle && this.constructor.name) {
+                    ps[_omi2['default'].getAttr(this.constructor)] = '';
                 }
                 ps[this._omi_scopedAttr] = '';
             }
@@ -1564,7 +1611,7 @@ var Component = function () {
 
                 var Ctor = typeof root.tagName === 'string' ? _omi2['default'].getConstructor(root.tagName) : root.tagName;
                 if (Ctor) {
-                    var cmi = this._getNextChild(root.tagName, parentInstance);
+                    var cmi = _omi2['default'].getInstanceById(root.properties._omi_component_id);
                     // not using pre instance the first time
                     if (cmi && !first) {
                         if (cmi.data.selfDataFirst) {
@@ -1579,12 +1626,15 @@ var Component = function () {
                     } else {
 
                         var instance = new Ctor(root.properties);
+                        root.properties._omi_component_id = instance.id;
+                        if (parentInstance) {
+                            instance.$store = parentInstance.$store;
+                        }
                         if (instance.data.children !== undefined) {
                             instance.data._children = instance.data.children;
                             console.warn('The children property will be covered.access it by _children');
                         }
                         instance.data.children = root.children;
-                        instance._using = true;
                         instance.install();
                         instance.beforeRender();
                         instance._render(first);
@@ -1615,37 +1665,6 @@ var Component = function () {
             root.children && root.children.forEach(function (child, index) {
                 _this3._normalize(child, first, root.children, index, _this3);
             });
-        }
-    }, {
-        key: '_resetUsing',
-        value: function _resetUsing(root) {
-            var _this4 = this;
-
-            root.children.forEach(function (child) {
-                _this4._resetUsing(child);
-                child._using = false;
-            });
-        }
-    }, {
-        key: '_getNextChild',
-        value: function _getNextChild(cn, parentInstance) {
-            if (typeof cn !== 'string') {
-                for (var i = 0, len = parentInstance.children.length; i < len; i++) {
-                    var child = parentInstance.children[i];
-                    if (cn === child.constructor && !child._using) {
-                        child._using = true;
-                        return child;
-                    }
-                }
-            } else if (parentInstance) {
-                for (var _i = 0, _len = parentInstance.children.length; _i < _len; _i++) {
-                    var _child = parentInstance.children[_i];
-                    if (cn.replace(/-/g, '').toLowerCase() === _child.constructor.is.replace(/-/g, '').toLowerCase() && !_child._using) {
-                        _child._using = true;
-                        return _child;
-                    }
-                }
-            }
         }
     }, {
         key: '_fixForm',
@@ -1685,10 +1704,10 @@ var Component = function () {
     }, {
         key: '_childrenInstalled',
         value: function _childrenInstalled(root) {
-            var _this5 = this;
+            var _this4 = this;
 
             root.children.forEach(function (child) {
-                _this5._childrenInstalled(child);
+                _this4._childrenInstalled(child);
                 child._omi_needInstalled && child.installed();
                 child._omi_needInstalled = false;
                 child._execInstalledHandlers();
@@ -1697,30 +1716,30 @@ var Component = function () {
     }, {
         key: '_mixPlugins',
         value: function _mixPlugins() {
-            var _this6 = this;
+            var _this5 = this;
 
             Object.keys(_omi2['default'].plugins).forEach(function (item) {
-                var nodes = _omi2['default'].$$('*[' + item + ']', _this6.node);
+                var nodes = _omi2['default'].$$('*[' + item + ']', _this5.node);
                 nodes.forEach(function (node) {
-                    if (node.hasAttribute(_this6._omi_scopedAttr)) {
-                        _omi2['default'].plugins[item](node, _this6);
+                    if (node.hasAttribute(_this5._omi_scopedAttr)) {
+                        _omi2['default'].plugins[item](node, _this5);
                     }
                 });
-                if (_this6.node.hasAttribute(item)) {
-                    _omi2['default'].plugins[item](_this6.node, _this6);
+                if (_this5.node.hasAttribute(item)) {
+                    _omi2['default'].plugins[item](_this5.node, _this5);
                 }
             });
         }
     }, {
         key: '_mixRefs',
         value: function _mixRefs() {
-            var _this7 = this;
+            var _this6 = this;
 
             this.refs = {};
             var nodes = _omi2['default'].$$('*[ref]', this.node);
             nodes.forEach(function (node) {
-                if (node.hasAttribute(_this7._omi_scopedAttr)) {
-                    _this7.refs[node.getAttribute('ref')] = node;
+                if (node.hasAttribute(_this6._omi_scopedAttr)) {
+                    _this6.refs[node.getAttribute('ref')] = node;
                 }
             });
             var attr = this.node.getAttribute('ref');
