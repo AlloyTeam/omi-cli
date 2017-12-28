@@ -42,19 +42,4 @@ class VoteList extends Omi.Component {
     }
 }
 
-//<div class="vote-item">
-//    <img src="https://p.qpic.cn/qqconadmin/0/b61f2670aa8a4dab91cccbbdde54c510/0" />
-//    <div class="right">
-//        <div class="l1">小猪他大家撒反对数据库很忙</div>
-//        <div class='l2'>来自手机QQ</div>
-//    </div>
-//</div>
-//<div class="vote-item">
-//    <img src="https://p.qpic.cn/qqconadmin/0/b61f2670aa8a4dab91cccbbdde54c510/0" />
-//    <div class="right single">
-//    <div  class="l1">小猪他很忙</div>
-//    </div>
-//    </div>
-
-
 export default VoteList
