@@ -75,6 +75,7 @@
     "less-loader": "^4.0.2",
     "npm-install-webpack-plugin-steamer": "^4.0.4",
     "omi-finger": "^0.1.4",
+    "omi-tap": "^0.1.0",
     "omix": "^1.2.5",
     "opn": "^5.1.0",
     "postcss-import": "^9.1.0",

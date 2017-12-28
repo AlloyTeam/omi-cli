@@ -1,4 +1,4 @@
-
+import 'omi-tap'
 
 class VoteList extends Omi.Component {
     constructor(data, option){
@@ -9,11 +9,8 @@ class VoteList extends Omi.Component {
         return require('./_index.less')
     }
 
-    showProfile(uin) {
-        mqq.ui.showProfile({
-            uin: uin + "",
-            uinType: 0
-        })
+    showProfile(user) {
+        alert(user.nick)
     }
 
     render() {
@@ -25,7 +22,7 @@ class VoteList extends Omi.Component {
                 <div ref="scroller">
                     {
                         list.map(item =>
-                                <div class="vote-item" onclick={()=>{this.showProfile(item.user_info.uin)}}>
+                                <div omi-tap class="vote-item" tap={()=>{this.showProfile(item.user_info)}}>
                                     <img src={item.user_info.portrait} />
                                     <div class={item.source==1?'right single':'right'}>
                                         <div class="l1">{item.user_info.nick}</div>
