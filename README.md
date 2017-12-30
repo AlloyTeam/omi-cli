@@ -122,35 +122,43 @@ export function getSrc(){
 通过require.ensure进行按需使用，在用户点击事件触发之后才会进行加载a.js以及a.js的所有依赖，如下面代码所示:
 
 ```js
+import logo from './logo.svg'
+import './index.css'
+import Intro from '../intro/index.js'
+
 class Hello extends Omi.Component {
   constructor(data, option){
       super(data, option)
   }
 
   handleClick(){
-    require.ensure(['./a.js'], function() {
-      let moduleA = require("./a.js")
-      document.body.innerHTML+=`<img src="${moduleA.getSrc()}">`
-    })
+      alert('Hello Omix !')
+      import("./a.js").then(function(moduleA) {
+          //console.log(moduleA);
+          document.body.innerHTML+=`<img src="${moduleA.getSrc()}">`
+      });
+  }
+
+  style(){
+    return require('./_hello.css')
   }
 
   render() {
-    return `
-      <div class="App">
-        <div class="App-header">
-          <img src='${logo}' onclick="handleClick" class="App-logo" alt="logo" />
-          <h2>Welcome to Omi</h2>
-        </div>
-        <p class="App-intro">
-          To get started, edit <code>src/component/hello.js</code> and save to reload.
-        </p>
-         <p class="App-intro">
-          {{name}}
-        </p>
-      </div>
-    `
+
+    return <div class="app">
+                <div class="app-header">
+                  <img src={logo} onclick={this.handleClick.bind(this)} class="app-logo" alt="logo" />
+                  <h2>Welcome to Omix</h2>
+                </div>
+                <Intro></Intro>
+                <p>
+                  {this.data.name}
+                </p>
+            </div>
   }
 }
+
+export default Hello
 ```
 
 上面是老的方式，webpack2更加建议使用一种"类函数式(function-like)"的 import() 模块加载语法。如:
@@ -164,13 +172,6 @@ import("./a.js").then(function(moduleA) {
 这样也能达到同样的效果，当然你也[可以使用async/await](https://doc.webpack-china.org/guides/code-splitting-async/#-babel-async-await)。
 
 ### 兼容 IE8
-
-Omi框架拥有四个版本，其中三个是可以兼容IE8的。
-
-* omi.js 支持到**IE9**，使用 [sodajs](https://github.com/AlloyTeam/sodajs) 为内置指令系统
-* omi.art.js 支持IE8，使用 [art-template](https://github.com/aui/art-template)为内置模版引擎
-* omi.lite.js 支持IE8，不包含任何模板引擎
-* omi.mustache.js 支持IE8，使用 [mustache.js](https://github.com/janl/mustache.js)为内置模版引擎
 
 由于使用了`webpack-hot-middleware`, 开发过程**不兼容**IE8，但是没关系，`npm run dist `生成的发布代码是兼容IE8。
 
@@ -316,8 +317,6 @@ Omi框架的style方法返回的字符串会生成为组件的局部CSS，`_inde
 ``` js
 import Intro from '../intro/index.js'
 
-Omi.tag('intro',Intro)
-
 class XXX extends Omi.Component {
   constructor(data, option){
       super(data, option)
@@ -328,7 +327,7 @@ class XXX extends Omi.Component {
     return `
       <div>
         <div>Hello Omi!</div>
-        <intro></intro>
+        <Intro></Intro>
       </div>
     `
   }
@@ -337,7 +336,7 @@ class XXX extends Omi.Component {
 export default XXX
 ```
 
-通过`Omi.tag('intro',Intro)`把组件Intro生成为可以声明式的标签。注意便签名字要使用小写，多个单词使用中划线，如:`my-intro`、`app-header`等。
+
 
 特别需要注意的是每个组件必须要要闭合成一个节点，比如:
 
@@ -345,10 +344,10 @@ export default XXX
 
 ```
   render() {
-    return `
+    return （
         <div>a</div>
         <div>b</div>
-    `
+    ）
   }
 ```
 
@@ -356,11 +355,12 @@ export default XXX
 
 ```
   render() {
-    return `
+    return （
         <div>
             <div>a</div>
             <div>b</div>
-        <div>`
+        <div>
+        )
   }
 ```
 
