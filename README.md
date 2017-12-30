@@ -22,6 +22,8 @@ $ npm run dist               //生成发布文件
 omi init-x [project name]
 ```
 
+注意，最新的cli使用 `omi init [project name]` 也是初始化 omix 项目。
+
 脚手架完全基于 webpack2+. 执行 `omi init` 或 `omi init-x` 的过程中会自动安装npm依赖包，请耐心等待。国内用户可通过下面的命令切换npm镜像:
 
 ```
