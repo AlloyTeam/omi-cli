@@ -72,7 +72,7 @@ export default class AppStore {
                        {
                            user_info:{
                                portrait:'http://thirdqq.qlogo.cn/g?b=sdk\u0026k=ExMibJCNGibKcYlYAJ1K7mtA\u0026s=140\u0026t=1513147957',
-                               nick:'Tomi'
+                               nick:'Tom'
                            },
                            source:1
                        }
