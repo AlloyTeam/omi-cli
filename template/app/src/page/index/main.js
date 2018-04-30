@@ -26,9 +26,7 @@ let store =  new AppStore({
     }
 })
 
-Omi.render(app, '#pages',{
-    store
-})
+Omi.render(app, document.querySelector('#pages'),store)
 
 
 store.init()

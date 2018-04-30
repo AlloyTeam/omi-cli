@@ -22,7 +22,7 @@ export default class AppStore {
 
         let data = {
             result: {
-                vote_title: 'Do you like Omix?',
+                vote_title: 'Do you like Omi?',
                 option: ['Sure', 'No'],
                 vote_result: [2, 1],
                 user_info: {
