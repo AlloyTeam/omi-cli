@@ -15,9 +15,11 @@
             lastSimple = simple;
         }
         var p = new VNode();
-        p.nodeName = nodeName;
-        p.children = children;
+        p.nodeName = isH5 ? nodeName : map[nodeName];
         p.attributes = null == attributes ? void 0 : attributes;
+        if (children && 'string' == typeof children[0] && !isH5) if (p.attributes) p.attributes.value = children[0]; else p.attributes = {
+            value: children[0]
+        }; else p.children = children;
         p.key = null == attributes ? void 0 : attributes.key;
         if (void 0 !== options.vnode) options.vnode(p);
         return p;
@@ -35,7 +37,12 @@
     function rerender() {
         var p, list = items;
         items = [];
-        while (p = list.pop()) if (p.__d) renderComponent(p);
+        var element;
+        while (p = list.pop()) {
+            element = p.base;
+            if (p.__d) renderComponent(p);
+        }
+        if (!list.length) if (options.componentChange) options.componentChange(p, element);
     }
     function isSameNodeType(node, vnode, hydrating) {
         if ('string' == typeof vnode || 'number' == typeof vnode) return void 0 !== node.splitText;
@@ -52,9 +59,38 @@
         return props;
     }
     function createNode(nodeName, isSvg) {
-        var node = isSvg ? document.createElementNS('http://www.w3.org/2000/svg', nodeName) : document.createElement(nodeName);
+        var node = isSvg ? options.doc.createElementNS('http://www.w3.org/2000/svg', nodeName) : options.doc.createElement(nodeName);
         node.__n = nodeName;
         return node;
+    }
+    function parseCSSText(cssText) {
+        var cssTxt = cssText.replace(/\/\*(.|\s)*?\*\//g, " ").replace(/\s+/g, " ");
+        var style = {}, _ref = cssTxt.match(/ ?(.*?) ?{([^}]*)}/) || [ a, b, cssTxt ], a = _ref[0], b = _ref[1], rule = _ref[2];
+        var properties = rule.split(";").map(function(o) {
+            return o.split(":").map(function(x) {
+                return x && x.trim();
+            });
+        });
+        for (var i = properties, i = Array.isArray(i), i = 0, i = i ? i : i[Symbol.iterator](); ;) {
+            var _ref3;
+            if (i) {
+                if (i >= i.length) break;
+                _ref3 = i[i++];
+            } else {
+                i = i.next();
+                if (i.done) break;
+                _ref3 = i.value;
+            }
+            var _ref2 = _ref3;
+            var property = _ref2[0];
+            var value = _ref2[1];
+            style[function(s) {
+                return s.replace(/\W+\w/g, function(match) {
+                    return match.slice(-1).toUpperCase();
+                });
+            }(property)] = value;
+        }
+        return style;
     }
     function removeNode(node) {
         var parentNode = node.parentNode;
@@ -65,12 +101,28 @@
         if ('key' === name) ; else if ('ref' === name) {
             if (old) old(null);
             if (value) value(node);
-        } else if ('class' === name && !isSvg) node.className = value || ''; else if ('style' === name) {
+        } else if ('class' === name && !isSvg) node.className = value || ''; else if ('style' === name) if (isH5$1) {
             if (!value || 'string' == typeof value || 'string' == typeof old) node.style.cssText = value || '';
             if (value && 'object' == typeof value) {
                 if ('string' != typeof old) for (var i in old) if (!(i in value)) node.style[i] = '';
                 for (var i in value) node.style[i] = 'number' == typeof value[i] && !1 === IS_NON_DIMENSIONAL.test(i) ? value[i] + 'px' : value[i];
             }
+        } else {
+            var oldJson = old, currentJson = value;
+            if ('string' == typeof old) oldJson = parseCSSText(old);
+            if ('string' == typeof value) currentJson = parseCSSText(value);
+            var result = {}, changed = !1;
+            if (oldJson) {
+                for (var key in oldJson) if ('object' == typeof currentJson && !(key in currentJson)) {
+                    result[key] = '';
+                    changed = !0;
+                }
+                for (var ckey in currentJson) if (currentJson[ckey] !== oldJson[ckey]) {
+                    result[ckey] = currentJson[ckey];
+                    changed = !0;
+                }
+                if (changed) node.setStyles(result);
+            } else node.setStyles(currentJson);
         } else if ('dangerouslySetInnerHTML' === name) {
             if (value) node.innerHTML = value.__html || '';
         } else if ('o' == name[0] && 'n' == name[1]) {
@@ -442,26 +494,163 @@
         }
     }
     function render(vnode, parent, merge) {
-        var m = isElement(merge) || !merge;
+        parent = 'string' == typeof parent ? document.querySelector(parent) : parent;
+        if (!0 === merge) while (parent.firstChild) parent.removeChild(parent.firstChild);
+        var m = isElement(merge) || void 0 === merge;
         if (vnode instanceof Component) {
             if (window && window.Omi) window.Omi.instances.push(vnode);
+            if (vnode.componentWillMount) vnode.componentWillMount();
+            if (vnode.install) vnode.install();
             if (m) vnode.base = diff(merge, vnode.render(), {}, !1, parent, !1); else {
                 vnode.$store = options.$store = merge;
                 vnode.base = diff(void 0, vnode.render(), {}, !1, parent, !1);
             }
+            if (vnode.componentDidMount) vnode.componentDidMount();
+            if (vnode.installed) vnode.installed();
             return vnode.base;
         }
         return diff(merge, vnode, {}, !1, parent, !1);
     }
     var options = {
         scopedStyle: !0,
-        $store: null
+        $store: null,
+        isWeb: !0,
+        doc: 'object' == typeof document ? document : null,
+        sendBridgeFlag: {}
     };
     var stack = [];
     var EMPTY_CHILDREN = [];
-    var defer = 'function' == typeof Promise ? Promise.resolve().then.bind(Promise.resolve()) : setTimeout;
+    var isH5 = options.isWeb;
+    var map = {
+        br: 'view',
+        hr: 'view',
+        p: 'view',
+        h1: 'view',
+        h2: 'view',
+        h3: 'view',
+        h4: 'view',
+        h5: 'view',
+        h6: 'view',
+        abbr: 'view',
+        address: 'view',
+        b: 'view',
+        bdi: 'view',
+        bdo: 'view',
+        blockquote: 'view',
+        cite: 'view',
+        code: 'view',
+        del: 'view',
+        ins: 'view',
+        dfn: 'view',
+        em: 'view',
+        strong: 'view',
+        samp: 'view',
+        kbd: 'view',
+        var: 'view',
+        i: 'view',
+        mark: 'view',
+        pre: 'view',
+        q: 'view',
+        ruby: 'view',
+        rp: 'view',
+        rt: 'view',
+        s: 'view',
+        small: 'view',
+        sub: 'view',
+        sup: 'view',
+        time: 'view',
+        u: 'view',
+        wbr: 'view',
+        form: 'form',
+        input: 'input',
+        textarea: 'textarea',
+        button: 'button',
+        select: 'picker',
+        option: 'view',
+        optgroup: 'view',
+        label: 'label',
+        fieldset: 'view',
+        datalist: 'picker',
+        legend: 'view',
+        output: 'view',
+        iframe: 'view',
+        img: 'image',
+        canvas: 'canvas',
+        figure: 'view',
+        figcaption: 'view',
+        audio: 'audio',
+        source: 'audio',
+        video: 'video',
+        track: 'video',
+        a: 'navigator',
+        nav: 'view',
+        link: 'navigator',
+        ul: 'view',
+        ol: 'view',
+        li: 'view',
+        dl: 'view',
+        dt: 'view',
+        dd: 'view',
+        menu: 'view',
+        command: 'view',
+        table: 'view',
+        caption: 'view',
+        th: 'view',
+        td: 'view',
+        tr: 'view',
+        thead: 'view',
+        tbody: 'view',
+        tfoot: 'view',
+        col: 'view',
+        colgroup: 'view',
+        div: 'view',
+        main: 'view',
+        span: 'text',
+        header: 'view',
+        footer: 'view',
+        section: 'view',
+        article: 'view',
+        aside: 'view',
+        details: 'view',
+        dialog: 'view',
+        summary: 'view',
+        progress: 'progress',
+        meter: 'progress',
+        head: 'view',
+        meta: 'view',
+        base: 'text',
+        map: 'map',
+        area: 'navigator',
+        script: 'view',
+        noscript: 'view',
+        embed: 'view',
+        object: 'view',
+        param: 'view',
+        view: 'view',
+        'scroll-view': 'scroll-view',
+        swiper: 'swiper',
+        icon: 'icon',
+        text: 'text',
+        checkbox: 'checkbox',
+        radio: 'radio',
+        picker: 'picker',
+        'picker-view': 'picker-view',
+        slider: 'slider',
+        switch: 'switch',
+        navigator: 'navigator',
+        image: 'image',
+        'contact-button': 'contact-button',
+        block: 'block'
+    };
+    var usePromise = 'function' == typeof Promise;
+    if ('object' != typeof document && 'undefined' != typeof global && global.v) if ('android' === global.v.platform) usePromise = !0; else {
+        var systemVersion = global.v.systemVersion && global.v.systemVersion.split('.')[0] || 0;
+        if (systemVersion > 8) usePromise = !0;
+    }
+    var defer = usePromise ? Promise.resolve().then.bind(Promise.resolve()) : setTimeout;
     var IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
     var items = [];
+    var isH5$1 = options.isWeb;
     var mounts = [];
     var diffLevel = 0;
     var isSvgMode = !1;
@@ -479,6 +668,7 @@
         forceUpdate: function(callback) {
             if (callback) (this.__h = this.__h || []).push(callback);
             renderComponent(this, 2);
+            if (options.componentChange) options.componentChange(this, this.base);
         },
         update: function(callback) {
             this.forceUpdate(callback);
@@ -486,9 +676,24 @@
         render: function() {}
     });
     var instances = [];
-    if ("object" == typeof window) window.Omi = window.Omi || {
-        instances: instances,
-        h: h
+    var root = function() {
+        if ('object' != typeof global || !global || global.Math !== Math || global.Array !== Array) {
+            if ('undefined' != typeof self) return self; else if ('undefined' != typeof window) return window; else if ('undefined' != typeof global) return global;
+            return function() {
+                return this;
+            }();
+        }
+        return global;
+    }();
+    root.Omi = {
+        h: h,
+        createElement: h,
+        cloneElement: cloneElement,
+        Component: Component,
+        render: render,
+        rerender: rerender,
+        options: options,
+        instances: instances
     };
     var Omi = {
         h: h,

@@ -8,7 +8,7 @@ class Hello extends Omi.Component {
   }
 
   handleClick(){
-      alert('Hello Omix !')
+      this.$store.rename('Hello Omi !')
       import("./a.js").then(function(moduleA) {
           //console.log(moduleA);
           document.body.innerHTML+=`<img src="${moduleA.getSrc()}">`
@@ -24,11 +24,11 @@ class Hello extends Omi.Component {
     return <div class="app">
                 <div class="app-header">
                   <img src={logo} onclick={this.handleClick.bind(this)} class="app-logo" alt="logo" />
-                  <h2>Welcome to Omix</h2>
+                  <h2>Welcome to Omi</h2>
                 </div>
                 <Intro></Intro>
                 <p>
-                  {this.data.name}
+                  {this.$store.name}
                 </p>
             </div>
   }

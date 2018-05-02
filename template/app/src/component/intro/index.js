@@ -10,9 +10,6 @@ class Intro extends Omi.Component {
   render() {
     return <p class="app-intro">
                 To get started, edit <code>src/component/hello.js</code> and save to reload.
-                <div>
-                    <img src={require('./omix.png')} />
-                </div>
             </p>
   }
 }

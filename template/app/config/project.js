@@ -89,7 +89,7 @@ var config = {
         // 不经webpack打包的资源
         static: [
             {
-                src: "libs/",
+                src: "lib/",
                 hash: true,
             }
         ],

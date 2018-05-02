@@ -1,0 +1,56 @@
+html,body{
+    margin: 0;
+    padding: 0;
+
+}
+
+body{
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
+
+
+}
+
+*{
+    box-sizing: border-box;
+}
+.b1{
+    position: relative;
+}
+
+.b1:after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-transform-origin: 0 0;
+    -webkit-transform: scale(1);
+    pointer-events: none;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    .b1:after {
+        right: -100%;
+        bottom: -100%;
+        -webkit-transform: scale(0.5);
+    }
+}
+
+
+.b1.bb:after {
+    border-bottom: 1px solid #ccc;
+}
+
+.b1.bt:after {
+    border-top: 1px solid #ccc;
+}
+
+.b1.bl:after {
+    border-left: 1px solid #ccc;
+}
+
+.b1.br:after {
+    border-right: 1px solid #ccc;
+}
