@@ -320,6 +320,29 @@
         someThingStyles.setAttribute('type', 'text/css');
         if (window.ActiveXObject) someThingStyles.styleSheet.cssText = cssText; else someThingStyles.textContent = cssText;
     }
+    function addScopedAttr(vdom, style, attr, component) {
+        if (options.scopedStyle) {
+            scopeVdom(attr, vdom);
+            style = scoper(style, attr);
+            if (style !== component.r) addStyle(style, attr);
+        } else if (style !== component.r) addStyleWithoutId(style);
+        component.r = style;
+    }
+    function addScopedAttrStatic(vdom, style, attr) {
+        if (options.scopedStyle) {
+            scopeVdom(attr, vdom);
+            if (!options.staticStyleRendered) addStyle(scoper(style, attr), attr);
+        } else if (!options.staticStyleRendered) addStyleWithoutId(style);
+    }
+    function scopeVdom(attr, vdom) {
+        if ('string' != typeof vdom) {
+            vdom.attributes = vdom.attributes || {};
+            vdom.attributes[attr] = '';
+            vdom.children.forEach(function(child) {
+                return scopeVdom(attr, child);
+            });
+        }
+    }
     function setComponentProps(component, props, opts, context, mountAll) {
         if (!component.__x) {
             component.__x = !0;
@@ -340,29 +363,6 @@
             if (component.__r) component.__r(component);
         }
     }
-    function addScopedAttr(vdom, style, attr, component) {
-        if (options.scopedStyle) {
-            scopeVdom(attr, vdom);
-            style = scoper(style, attr);
-            if (style !== component.r) addStyle(style, attr);
-        } else if (style !== component.r) addStyleWithoutId(style);
-        component.r = style;
-    }
-    function addScopedAttrStatic(vdom, style, attr, firstTime) {
-        if (options.scopedStyle) {
-            scopeVdom(attr, vdom);
-            if (firstTime) addStyle(scoper(style, attr), attr);
-        } else if (firstTime) addStyleWithoutId(style);
-    }
-    function scopeVdom(attr, vdom) {
-        if ('string' != typeof vdom) {
-            vdom.attributes = vdom.attributes || {};
-            vdom.attributes[attr] = '';
-            vdom.children.forEach(function(child) {
-                return scopeVdom(attr, child);
-            });
-        }
-    }
     function renderComponent(component, opts, mountAll, isChild) {
         if (!component.__x) {
             var rendered, inst, cbase, props = component.props, state = component.state, context = component.context, previousProps = component.__p || props, previousState = component.__s || state, previousContext = component.__c || context, isUpdate = component.base, nextBase = component.__b, initialBase = isUpdate || nextBase, initialChildComponent = component._component, skip = !1;
@@ -380,7 +380,7 @@
             if (!skip) {
                 rendered = component.render(props, state, context);
                 if (component.style) addScopedAttr(rendered, component.style(), '_style_' + component.s, component);
-                if (component.staticStyle) addScopedAttrStatic(rendered, component.staticStyle(), '_style_' + component.constructor.name, !component.base);
+                if (component.staticStyle) addScopedAttrStatic(rendered, component.staticStyle(), '_style_' + component.constructor.name);
                 if (component.getChildContext) context = extend(extend({}, context), component.getChildContext());
                 var toUnmount, base, childComponent = rendered && rendered.nodeName;
                 if ('function' == typeof childComponent) {
@@ -494,29 +494,34 @@
         }
     }
     function render(vnode, parent, merge) {
+        options.staticStyleRendered = !1;
         parent = 'string' == typeof parent ? document.querySelector(parent) : parent;
         if (!0 === merge) while (parent.firstChild) parent.removeChild(parent.firstChild);
         var m = isElement(merge) || void 0 === merge;
         if (vnode instanceof Component) {
             if (window && window.Omi) window.Omi.instances.push(vnode);
+            if (!m) vnode.$store = options.$store = merge;
             if (vnode.componentWillMount) vnode.componentWillMount();
             if (vnode.install) vnode.install();
-            if (m) vnode.base = diff(merge, vnode.render(), {}, !1, parent, !1); else {
-                vnode.$store = options.$store = merge;
-                vnode.base = diff(void 0, vnode.render(), {}, !1, parent, !1);
-            }
+            var rendered = vnode.render();
+            if (vnode.style) addScopedAttr(rendered, vnode.style(), '_style_' + vnode.s, vnode);
+            if (vnode.staticStyle) addScopedAttrStatic(rendered, vnode.staticStyle(), '_style_' + vnode.constructor.name, !vnode.base);
+            vnode.base = diff(m ? merge : void 0, rendered, {}, !1, parent, !1);
             if (vnode.componentDidMount) vnode.componentDidMount();
             if (vnode.installed) vnode.installed();
+            options.staticStyleRendered = !0;
             return vnode.base;
         }
-        return diff(merge, vnode, {}, !1, parent, !1);
+        var result = diff(merge, vnode, {}, !1, parent, !1);
+        options.staticStyleRendered = !0;
+        return result;
     }
     var options = {
         scopedStyle: !0,
         $store: null,
         isWeb: !0,
-        doc: 'object' == typeof document ? document : null,
-        sendBridgeFlag: {}
+        staticStyleRendered: !1,
+        doc: 'object' == typeof document ? document : null
     };
     var stack = [];
     var EMPTY_CHILDREN = [];
@@ -695,6 +700,7 @@
         options: options,
         instances: instances
     };
+    root.Omi.version = '3.0.0';
     var Omi = {
         h: h,
         createElement: h,
