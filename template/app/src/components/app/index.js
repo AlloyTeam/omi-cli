@@ -6,7 +6,6 @@ import style from './_index.css'
 class App extends Omi.Component {
 
   install(){
-
     this.clickHandler = this.clickHandler.bind(this)
   }
 
@@ -15,7 +14,6 @@ class App extends Omi.Component {
   }
 
   staticStyle() {
-    console.error(style)
     return style
   }
 
