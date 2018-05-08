@@ -10,6 +10,5 @@ const adminStore = new AdminStore({ name: 'Omi' }, {
   }
 })
 
-
 Omi.render(hello, '#root', adminStore)
 registerServiceWorker()
