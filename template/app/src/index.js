@@ -11,6 +11,5 @@ const appStore = new AppStore({ name: 'Omi' }, {
   }
 })
 
-
 Omi.render(app, '#root', appStore)
 registerServiceWorker()
