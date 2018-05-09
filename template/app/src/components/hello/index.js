@@ -1,14 +1,22 @@
 import Omi from 'omi'
 import './index.css'
 
-class Nav extends Omi.Component{
+import style from './_index.css'
+
+class Hello extends Omi.Component{
+
+    staticStyle(){
+        return style
+    }
+
     render(){
         return(
-            <div className="hello">
-                I am admin page.
+            <div class="hello">
+               <div> I am admin page.</div>
+               <div class="omi"></div>
             </div> 
         )
     }
 }
 
-export default Nav
+export default Hello
