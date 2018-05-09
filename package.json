@@ -1,6 +1,6 @@
 {
   "name": "omi-cli",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Create website with no build configuration. be friendly to [Omi](https://github.com/AlloyTeam/omi) framework.",
   "main": "bin/omi",
   "engines": {
