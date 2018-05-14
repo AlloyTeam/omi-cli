@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "omi-ssr",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node  ./node_modules/preact-cli-omi/lib/index.js watch",
+    "build": "node  ./node_modules/preact-cli-omi/lib/index.js build",
+    "start": "node server"
+  },
+  "devDependencies": {
+    "preact-cli-omi": "^0.1.4"
+  },
+  "dependencies": {
+    "compression": "^1.7.1",
+    "express": "^4.16.2",
+    "omi": "latest",
+    "omi-render-to-string": "^0.1.0",
+    "serve-favicon": "^2.4.5"
+  }
+}

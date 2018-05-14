@@ -1,0 +1,34 @@
+const fs = require('fs');
+const express = require('express');
+const { join, basename } = require('path');
+const compression = require('compression')();
+const {render} = require('omi-render-to-string');
+const {app} = require('./build/ssr-build/ssr-bundle');
+
+const { PORT=3000 } = process.env;
+// TODO: improve this?
+const bodyTag = '<body>'
+
+const assets = join(__dirname, 'build');
+const template = fs.readFileSync('./build/tpl.html', 'utf8');
+const favicon = require('serve-favicon')(join(assets, 'favicon.ico'));
+
+function setHeaders(res, file) {
+	let cache = basename(file) === 'sw.js' ? 'private,no-cache' : 'public,max-age=31536000,immutable';
+	res.setHeader('Cache-Control', cache); // disable service worker cache
+}
+
+express()
+	.use(favicon)
+	.use(compression)
+	.use(express.static(assets, { setHeaders }))
+	.get('*', (req, res) => {
+		//let url = req.url;
+		//let body = render(h(App, { url }));
+		let body = render(app);
+		res.send(template.replace(bodyTag, bodyTag+body));
+	})
+	.listen(PORT, err => {
+		if (err) throw err;
+		console.log(`> Running on localhost:${PORT}`);
+	});

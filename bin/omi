@@ -46,10 +46,10 @@ program
     })
 
 program
-    .command('init-x [projectName]')
+    .command('init-ssr [projectName]')
     .description('Initialize a new omix project in the current folder')
     .action(function(projectName, option){
-        var cmd = 'init-x';
+        var cmd = 'init-ssr';
         if(option.parent.mirror && typeof option.parent.mirror === "string"){
             options.mirror = option.parent.mirror;
         }
