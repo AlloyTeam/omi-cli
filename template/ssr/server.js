@@ -6,7 +6,7 @@ const {render} = require('omi-render-to-string');
 const {app} = require('./build/ssr-build/ssr-bundle');
 
 const { PORT=3000 } = process.env;
-// TODO: improve this?
+
 const bodyTag = '<body>'
 
 const assets = join(__dirname, 'build');
@@ -23,8 +23,6 @@ express()
 	.use(compression)
 	.use(express.static(assets, { setHeaders }))
 	.get('*', (req, res) => {
-		//let url = req.url;
-		//let body = render(h(App, { url }));
 		let body = render(app);
 		res.send(template.replace(bodyTag, bodyTag+body));
 	})

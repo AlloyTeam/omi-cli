@@ -4,9 +4,7 @@ import { Component, render } from 'omi';
 
 import Header from './components/header';
 //import Home from './components/home';
-import Profile from './components/profile';
 import Home from 'async!./components/home';
-// import Profile from 'async!./components/profile';
 
 class App extends Component {
 	showHomeHandler = e => {
