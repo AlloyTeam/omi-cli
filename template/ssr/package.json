@@ -9,13 +9,13 @@
     "start": "node server"
   },
   "devDependencies": {
-    "preact-cli-omi": "^0.1.4"
+    "preact-cli-omi": "^0.1.5"
   },
   "dependencies": {
     "compression": "^1.7.1",
     "express": "^4.16.2",
     "omi": "latest",
-    "omi-render-to-string": "^0.1.0",
+    "omi-render-to-string": "^0.1.1",
     "serve-favicon": "^2.4.5"
   }
 }

@@ -7,6 +7,11 @@ import Header from './components/header';
 import Home from 'async!./components/home';
 
 class App extends Component {
+
+	install(){
+		this.$store.mixData(this.$store.ssrData)
+	}
+
 	showHomeHandler = e => {
 		this.showHome = true
 		this.update()
@@ -25,16 +30,17 @@ class App extends Component {
 	}
 }
 
-
 const app = new App()
-const appStore = new AppStore({ name: 'Omi' }, {
+const store = new AppStore({}, {
 	onRename: () => {
 		app.update()
 	}
 })
 
 
-render(app, 'body', appStore, '#app')
+render(app, 'body', {
+	store,
+	merge:'#app'
+})
 
 export { app }
-

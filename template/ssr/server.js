@@ -18,13 +18,22 @@ function setHeaders(res, file) {
 	res.setHeader('Cache-Control', cache); // disable service worker cache
 }
 
+function requestData(callback){
+	setTimeout(()=>{
+		callback({name:'Omi',age : 1})
+	},100)
+}
+
 express()
 	.use(favicon)
 	.use(compression)
 	.use(express.static(assets, { setHeaders }))
 	.get('*', (req, res) => {
-		let body = render(app);
-		res.send(template.replace(bodyTag, bodyTag+body));
+		requestData((data)=>{
+			app.$store.ssrData = data;
+			const body = render(app);
+			res.send(template.replace(bodyTag, bodyTag + body));
+		})	
 	})
 	.listen(PORT, err => {
 		if (err) throw err;
