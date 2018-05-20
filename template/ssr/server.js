@@ -8,6 +8,7 @@ const {app} = require('./build/ssr-build/ssr-bundle');
 const { PORT=3000 } = process.env;
 
 const bodyTag = '<body>'
+const headTag = '</head>'
 
 const assets = join(__dirname, 'build');
 const template = fs.readFileSync('./build/tpl.html', 'utf8');
@@ -20,7 +21,7 @@ function setHeaders(res, file) {
 
 function requestData(callback){
 	setTimeout(()=>{
-		callback({name:'Omi',age : 1})
+		callback({name:'Omi SSR',age : 1})
 	},100)
 }
 
@@ -31,8 +32,8 @@ express()
 	.get('*', (req, res) => {
 		requestData((data)=>{
 			app.$store.ssrData = data;
-			const body = render(app);
-			res.send(template.replace(bodyTag, bodyTag + body));
+			const result = render(app);
+			res.send(template.replace(headTag, result.css+headTag).replace(bodyTag, bodyTag + result.html));
 		})	
 	})
 	.listen(PORT, err => {
