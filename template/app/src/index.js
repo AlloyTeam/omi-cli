@@ -1,15 +1,8 @@
-import Omi from 'omi'
+import { render } from 'omi'
 import './assets/index.css'
-import App from './components/app'
+import './components/app'
 import registerServiceWorker from './assets/register-service-worker'
-import AppStore from './store/app-store'
-  
-const app = new App()
-const store = new AppStore({ name: 'Omi' }, {
-  onRename: () => {
-    app.update()
-  }
-})
+import store from './store/app-store'
 
-Omi.render(app, '#root', { store })
+render(<my-app />, '#root', store)
 registerServiceWorker()

@@ -1,22 +1,19 @@
-import Omi from 'omi'
-import './index.css'
-
+import { tag, WeElement } from 'omi'
 import style from './_index.css'
 
-class Hello extends Omi.Component{
+@tag('hello-element')
+class HelloElement extends WeElement{
 
-    staticStyle(){
+    css(){
         return style
     }
 
     render(){
         return(
             <div class="hello">
-               <div> I am admin page.</div>
+               <div> I am hello element.</div>
                <div class="omi"></div>
             </div> 
         )
     }
 }
-
-export default Hello

@@ -1,5 +1,6 @@
 .omi{
   width: 143px;
   height: 59px;
-  background-image: url(./omi.png)
+  margin: 0 auto;
+  background-image: url(./omi.png);
 }
