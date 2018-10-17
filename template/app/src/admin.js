@@ -1,8 +1,8 @@
 import { render } from 'omi'
 import './assets/index.css'
-import './components/app'
+import './elements/hello'
 import registerServiceWorker from './assets/register-service-worker'
-import store from './store/app-store'
+import store from './store/admin-store'
 
-render(<my-app />, '#root', store)
+render(<hello-element />, '#root', store)
 registerServiceWorker()

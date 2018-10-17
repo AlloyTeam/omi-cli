@@ -18,8 +18,8 @@
   font-size: 1.5em;
 }
 
-.app-intro {
-  font-size: large;
+.app-logo{
+  cursor: pointer; 
 }
 
 @keyframes app-logo-spin {
